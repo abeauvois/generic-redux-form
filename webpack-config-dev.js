@@ -7,10 +7,10 @@ module.exports = {
     'babel-polyfill',
     'eventsource-polyfill', // necessary for hot reloading with IE
     'webpack-hot-middleware/client',
-    './src/index.js'
+    './example/index.js'
   ],
   output: {
-    path: path.join(__dirname, 'dist'),
+    path: path.join(__dirname, 'example/dist'),
     filename: 'bundle.js',
     publicPath: '/dist/'
   },
@@ -23,14 +23,17 @@ module.exports = {
       'src',
       'node_modules'
     ],
-    extensions: [ '', '.json', '.js' ]
+    extensions: [ '', '.json', '.js' ],
+    alias: {
+      'generic-redux-form': '../src/index.js',
+    }
   },
   module: {
     loaders: [
       {
         test: /\.jsx?/,
         loaders: [ 'babel-loader' ],
-        include: path.join(__dirname, 'src')
+        include: [path.join(__dirname, 'src'), path.join(__dirname, 'example')]
       },
       {
         test: /\.json$/,

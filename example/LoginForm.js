@@ -2,14 +2,10 @@
 import React, { Component } from 'react'
 // import { Container, Header, Title, Content, Button, Footer, Text } from 'native-base'
 import {Card, CardActions, CardHeader, CardTitle, CardText} from 'material-ui/Card'
-// REDUX VENDORS
-import { connect } from 'react-redux'
-// REDUX FORM
 // GENERIC REDUX FORM
-import ConfigFormFields from './ConfigFormFields.js'
-import { GenericForm, gReduxForm } from './GenericForm.js'
+import { GenericFormFields, GenericForm, gReduxForm } from 'generic-redux-form'
 
-const configFormFields = new ConfigFormFields('login', {
+const genericFormFields = new GenericFormFields('login', {
       email:{
         type: 'input',
         label: 'email',
@@ -31,19 +27,9 @@ const configFormFields = new ConfigFormFields('login', {
 class LoginForm extends Component {
   constructor (props) {
     super(props)
-    this.onFormSubmit= this.onFormSubmit.bind(this)
   }
-//   componentDidMount() {
-//     this.refs[k]            // the Field
-//       .getRenderedComponent() // on Field, returns ReduxFormMaterialUITextField
-//       .getRenderedComponent() // on ReduxFormMaterialUITextField, returns TextField
-//       .focus()                // on TextField
-// }
-  onFormSubmit(formData){
-    console.log('onFormSubmit')
-  }
+
   render() {
-    // debugger
     return (
         <Card>
           <CardHeader
@@ -59,4 +45,4 @@ class LoginForm extends Component {
   }
 }
 
-export default gReduxForm(configFormFields)(LoginForm)
+export default gReduxForm(genericFormFields)(LoginForm)

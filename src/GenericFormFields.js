@@ -18,7 +18,7 @@ type FieldsListKeys = Array<string>
 
 const ERROR_REQUIRED = '* Required'
 
-class ConfigFormFields {
+class GenericFormFields {
   formName: string
   fieldsList: FieldsList
   fieldsListKeys: FieldsListKeys
@@ -59,4 +59,4 @@ class ConfigFormFields {
 export {
   ERROR_REQUIRED
 }
-export default ConfigFormFields
+export default GenericFormFields

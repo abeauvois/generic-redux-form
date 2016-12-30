@@ -29,8 +29,8 @@ class GenericForm extends Component {
     console.log('reset')
   }
   renderInput(k: string) {
-    const configFormFields = this.props.configFormFields
-    const field = configFormFields.fieldsList[k]
+    const genericFormFields = this.props.genericFormFields
+    const field = genericFormFields.fieldsList[k]
     const {type, label, iconName, placeholder, required, touched, error} = field
     // console.log(fields[k].input)
     return (
@@ -74,7 +74,7 @@ class GenericForm extends Component {
   //       }
   //     })
   //   }
-  //   const field = fields.configFormFields.fieldsList[k]
+  //   const field = fields.genericFormFields.fieldsList[k]
   //   const {type, label, iconName, touched, error} = field
   //   const currentUri = fields[k].input.value
   //   const source = (currentUri === '') ? DEFAULT_GRAAL_IMAGE : {uri: fields[k].input.value}
@@ -99,7 +99,7 @@ class GenericForm extends Component {
   //   )
   // }
   // const renderFormSwitch = (k: string) => {
-  //   const field = fields.configFormFields.fieldsList[k]
+  //   const field = fields.genericFormFields.fieldsList[k]
   //   const {label, selectData, iconName, touched, error} = field
   //   const onSwitch = x => fields[k].input.onChange(x)
   //   const switchValue = fields[k].input.value==="" ? false : fields[k].input.value
@@ -118,14 +118,14 @@ class GenericForm extends Component {
   //   )
   // }
   render(){
-    const {configFormFields, handleSubmit, pristine, submitting } = this.props
-    const names = configFormFields.fieldsListKeys
+    const {genericFormFields, handleSubmit, pristine, submitting } = this.props
+    const names = genericFormFields.fieldsListKeys
 
     return (
       <form onSubmit={handleSubmit(this.submit)}>
         {
           names.map(k => {
-            const field = configFormFields.fieldsList[k]
+            const field = genericFormFields.fieldsList[k]
             const type = field.type
             switch (type) {
               // case 'image':
@@ -151,19 +151,19 @@ class GenericForm extends Component {
 }
 
 // function mapStateToProps(state, ownProps){
-//   let formValues = configFormFields.getDefaultValues()
+//   let formValues = genericFormFields.getDefaultValues()
 //   return {
-//     fieldsNames: configFormFields.getFieldsListKeys(),
-//     validate: configFormFields.validate.bind(configFormFields),
-//     initialValues: formValues || configFormFields.getDefaultValues(),
+//     fieldsNames: genericFormFields.getFieldsListKeys(),
+//     validate: genericFormFields.validate.bind(genericFormFields),
+//     initialValues: formValues || genericFormFields.getDefaultValues(),
 //   }
 // }
 
-const gReduxForm = configFormFields => WrappedComponent => reduxForm({
-    form: configFormFields.getFormName(),
-    configFormFields: configFormFields,
+const gReduxForm = genericFormFields => WrappedComponent => reduxForm({
+    form: genericFormFields.getFormName(),
+    genericFormFields: genericFormFields,
     enableReinitialize: true,
-    initialValues: configFormFields.getDefaultValues(),
+    initialValues: genericFormFields.getDefaultValues(),
   })(WrappedComponent)
 
 export {
