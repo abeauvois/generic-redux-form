@@ -3,8 +3,11 @@ import React, { Component } from 'react'
 import { Field, reduxForm } from 'redux-form'
 
 class GenericForm extends Component {
-  constructor(props){
+  constructor(props, context){
     super(props)
+    if (!context._reduxForm) {
+      throw new Error('GenericForm must be inside a component decorated with gReduxForm()')
+    }
     this.submit = this.submit.bind(this)
     this.reset = this.reset.bind(this)
   }
@@ -30,6 +33,7 @@ class GenericForm extends Component {
     )
   }
   render(){
+    if (!genericFormFields) return null
     const {genericFormFields, handleSubmit, pristine, submitting } = this.props
     const names = genericFormFields.fieldsListKeys
 
