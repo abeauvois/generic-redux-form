@@ -1,18 +1,8 @@
 // UI VENDORS
 import React, { Component } from 'react'
 // import { Container, Header, Title, Content, Button, Footer, Text } from 'native-base'
-import {Card, CardActions, CardHeader, CardTitle, CardText} from 'material-ui/Card'
-import {
-  // AutoComplete,
-  // Checkbox,
-  // DatePicker,
-  // TimePicker,
-  // RadioButtonGroup,
-  // SelectField,
-  // Slider,
-  TextField,
-  // Toggle
-} from 'redux-form-material-ui'
+import { Card, CardActions, CardHeader, CardTitle, CardText } from 'material-ui/Card'
+import { TextField } from 'redux-form-material-ui'
 // GENERIC REDUX FORM
 import { GenericFormFields, GenericForm, gReduxForm, Validators } from 'generic-redux-form'
 
@@ -24,7 +14,6 @@ const genericFormFields = new GenericFormFields('login', {
         component: TextField,
         placeholder: 'EMAIL',
         default: 'my@email.com',
-        iconName: 'ios-person',
       },
       password:{
         type: 'input',
@@ -33,7 +22,6 @@ const genericFormFields = new GenericFormFields('login', {
         component: TextField,
         placeholder: 'PASSWORD',
         default: 'test',
-        iconName: 'ios-lock',
     }
   })
 
