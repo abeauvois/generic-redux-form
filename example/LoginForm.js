@@ -4,11 +4,15 @@ import React, { Component } from 'react'
 import { Card, CardActions, CardHeader, CardTitle, CardText } from 'material-ui/Card'
 import { RadioButton } from 'material-ui/RadioButton'
 import MenuItem from 'material-ui/MenuItem'
+import RaisedButton from 'material-ui/RaisedButton'
 import { TextField, RadioButtonGroup, Checkbox, Slider, SelectField } from 'redux-form-material-ui'
 // GENERIC REDUX FORM
 import { GenericFormFields, GenericForm, gReduxForm, Validators } from 'generic-redux-form'
 
 const genericFormFields = new GenericFormFields('login', {
+  FormButtons:{
+    component: RaisedButton,
+  },
   email:{
     label: 'email',
     validator: [Validators.email,Validators.required],

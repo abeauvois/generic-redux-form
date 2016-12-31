@@ -31,6 +31,7 @@ class GenericForm extends Component {
     if (!this.props.genericFormFields) return null
     const {genericFormFields, handleSubmit, pristine, submitting } = this.props
     const names = genericFormFields.fieldsListKeys
+    const FormButtons = genericFormFields.fieldsList['FormButtons'].component
     return (
       <form onSubmit={handleSubmit(this.submit)}>
         {
@@ -107,6 +108,7 @@ class GenericForm extends Component {
                   </Field>
                 )
               default:
+                if (k === 'FormButtons') return null
                 console.log('input')
                 return (
                   <Field key={k} name={label} component={component}
@@ -118,8 +120,8 @@ class GenericForm extends Component {
           })
         }
         <div>
-          <button type="submit" disabled={submitting}>Submit</button>
-          <button type="button" disabled={pristine || submitting} onClick={this.reset}>Clear</button>
+          <FormButtons primary type="submit" label="Submit" disabled={submitting} />
+          <FormButtons secondary label="Cancel" disabled={pristine || submitting} onClick={this.reset}/>
         </div>
       </form>
     )
