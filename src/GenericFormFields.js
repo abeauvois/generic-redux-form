@@ -23,7 +23,7 @@ const Constants = {
 }
 
 const Validators = {
-  required: value => value == null ? Constants.ERROR_REQUIRED : undefined,
+  required: value => !value ? Constants.ERROR_REQUIRED : undefined,
   email: value => value && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value) ? Constants.ERROR_INVALID_EMAIL : undefined
 }
 
