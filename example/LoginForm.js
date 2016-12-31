@@ -34,7 +34,7 @@ class LoginForm extends Component {
         <Card>
           <CardHeader
             title="Generic Redux Form"
-            subtitle="Example">
+            subtitle="Material UI Example">
           </CardHeader>
           <CardTitle>Login Form</CardTitle>
           <CardText>

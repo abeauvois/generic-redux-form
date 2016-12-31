@@ -2,10 +2,25 @@
 
 Create redux forms in a few lines of code and spend much less maintenance time on them.
 
+## Usage
+```
+# install generic-redux-form
+npm install generic-redux-form
 
-## Example
+# install with yarn
+yarn add generic-redux-form
 
-Here is the code for a simple form with redux-form
+# run the example
+npm install OR yarn
+
+then
+
+npm start
+
+then open your browser and go to http://localhost:3030
+```
+
+Here is the code for a simple form with redux-form (without Generic Redux Form):
 
 ```js
 import React from 'react'
@@ -85,3 +100,9 @@ class SimpleForm extends Component {
 
 export default gReduxForm(genericFormFields)(SimpleForm)
 ```
+
+## Contribute
+See the contributing docs.
+
+## Changelog
+See the [release page](https://github.com/abeauvois/generic-redux-form/releases)

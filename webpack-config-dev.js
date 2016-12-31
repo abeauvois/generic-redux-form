@@ -37,7 +37,9 @@ module.exports = {
       },
       {
         test: /\.json$/,
-        loader: 'json-loader'
+        loader: 'json-loader',
+        include: path.join(__dirname, '.')
+
       }
     ]
   }
