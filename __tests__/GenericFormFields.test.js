@@ -7,7 +7,7 @@ describe('GenericFormFields init', ()=> {
         label: 'email',
         validator: Validators.email,
         iconName: 'ios-person',
-        default: 'my@email.com'
+        defaultValue: 'my@email.com'
       },
       password:{
         type: 'input',
@@ -15,7 +15,7 @@ describe('GenericFormFields init', ()=> {
         validator: Validators.required,
         iconName: 'ios-lock',
         placeholder: 'PASSWORD',
-        default: 'test',
+        defaultValue: 'test',
       }
     }
     const configFormFields = new GenericFormFields('login', data)
@@ -28,8 +28,8 @@ describe('GenericFormFields init', ()=> {
   })
   it('Contains default fields values after getDefaultValues()', () => {
     const values = configFormFields.getDefaultValues()
-    expect(values.email).toBe(data.email.default)
-    expect(values.password).toBe(data.password.default)
+    expect(values.email).toBe(data.email.defaultValue)
+    expect(values.password).toBe(data.password.defaultValue)
   })
   it('Contains errors after validate({email: "example@dot.com"})', () => {
     const errors = configFormFields.validate({email: 'example@dot.com'})

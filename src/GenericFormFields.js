@@ -9,7 +9,8 @@ type Field = {
   iconRightName?: string,
   iconRightSize?: number,
   placeholder?: string,
-  default?: string,
+  limits?: {min: number, max: number, step: number},
+  defaultValue?: string,
   selectData?: Array<string>,
   style?: Object,
 }
@@ -23,6 +24,7 @@ const Constants = {
 }
 
 const Validators = {
+  noValidation: value => undefined,
   required: value => !value ? Constants.ERROR_REQUIRED : undefined,
   email: value => value && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value) ? Constants.ERROR_INVALID_EMAIL : undefined
 }
@@ -50,7 +52,7 @@ class GenericFormFields {
   getDefaultValues(){
     let formDefaultValues = {}
     this.fieldsListKeys.forEach(k => {
-      formDefaultValues[k] = this.fieldsList[k].default
+      formDefaultValues[k] = this.fieldsList[k].defaultValue
     })
     return formDefaultValues
   }
