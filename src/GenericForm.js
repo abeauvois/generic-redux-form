@@ -1,20 +1,6 @@
 // @flow
 import React, { Component } from 'react'
 import { Field, reduxForm } from 'redux-form'
-// import ImagePicker from 'react-native-image-picker'
-// import {Icon, List, ListItem, InputGroup, Input, Text, Switch } from 'native-base'
-// import FormDropdown from './form-dropdown.js'
-import {
-  // AutoComplete,
-  // Checkbox,
-  // DatePicker,
-  // TimePicker,
-  // RadioButtonGroup,
-  // SelectField,
-  // Slider,
-  TextField,
-  // Toggle
-} from 'redux-form-material-ui'
 
 class GenericForm extends Component {
   constructor(props){
@@ -31,92 +17,18 @@ class GenericForm extends Component {
   renderInput(k: string) {
     const genericFormFields = this.props.genericFormFields
     const field = genericFormFields.fieldsList[k]
-    const {type, label, iconName, placeholder, required, touched, error} = field
-    // console.log(fields[k].input)
+    const {type, label, component, placeholder, validator, touched, error} = field
     return (
       <Field
         key={k}
         name={label}
-        component={TextField}
+        component={component}
         hintText={placeholder}
-        floatingLabelText={label +' '+ (error ? error : '')}
-        validate={() => required}
+        floatingLabelText={label}
+        validate={validator}
         ref={label} withRef/>
     )
   }
-  // const renderFormImage = (k: string) => {
-  //   function selectImage(onConfirmCallback) {
-  //     const options = {
-  //       title: 'Select Image',
-  //       customButtons: [
-  //         {name: 'fb', title: 'Choose Photo from Facebook'},
-  //       ],
-  //       storageOptions: {
-  //         skipBackup: true,
-  //         path: 'images'
-  //       }
-  //     }
-  //     ImagePicker.showImagePicker(options, (response) => {
-  //       console.log('ImagePicker response = ', response)
-  //       if (response.didCancel) {
-  //         console.log('User cancelled image picker')
-  //       }
-  //       else if (response.error) {
-  //         console.log('ImagePicker Error: ', response.error)
-  //       }
-  //       else if (response.customButton) {
-  //         console.log('User tapped custom button: ', response.customButton)
-  //       }
-  //       else {
-  //         const source = {uri: response.uri.replace('file://', ''), isStatic: true}
-  //         fields[k].input.onChange(source.uri)
-  //         if (typeof onConfirmCallback === 'function') onConfirmCallback(source)
-  //       }
-  //     })
-  //   }
-  //   const field = fields.genericFormFields.fieldsList[k]
-  //   const {type, label, iconName, touched, error} = field
-  //   const currentUri = fields[k].input.value
-  //   const source = (currentUri === '') ? DEFAULT_GRAAL_IMAGE : {uri: fields[k].input.value}
-  //   console.log(fields[k].input, source)
-  //   return (
-  //     <ListItem key={k} button onPress={selectImage}>
-  //       <Image resizeMode="cover" source={source} style={localStyle.image}>
-  //         <View style={localStyle.imageButton}>
-  //           <Icon style={{backgroundColor:'transparent'}}
-  //             name={error && 'times-circle' || iconName || 'md-camera'}/>
-  //           <Text style={{backgroundColor:'transparent'}}>
-  //             {label}
-  //           </Text>
-  //         </View>
-  //       </Image>
-  //     </ListItem>
-  //   )
-  // }
-  // const renderFormDropdown = (k: string) => {
-  //   return (
-  //     <FormDropdown key={k} fieldName={k} fields={fields}/>
-  //   )
-  // }
-  // const renderFormSwitch = (k: string) => {
-  //   const field = fields.genericFormFields.fieldsList[k]
-  //   const {label, selectData, iconName, touched, error} = field
-  //   const onSwitch = x => fields[k].input.onChange(x)
-  //   const switchValue = fields[k].input.value==="" ? false : fields[k].input.value
-  //   return (
-  //     <ListItem key={k} iconLeft>
-  //       <Icon name={error && 'times-circle' || iconName || 'ios-play'}
-  //         style={{fontSize: 27, marginLeft: 5, marginTop: 5}}/>
-  //       <Text style={{marginLeft: 13, alignSelf: 'center'}}>
-  //         {label}: {switchValue ? 'YES' : 'NO'}
-  //       </Text>
-  //       <Switch
-  //         value={switchValue}
-  //         onValueChange={onSwitch}
-  //       />
-  //     </ListItem>
-  //   )
-  // }
   render(){
     const {genericFormFields, handleSubmit, pristine, submitting } = this.props
     const names = genericFormFields.fieldsListKeys

@@ -16,7 +16,16 @@ type Field = {
 type FieldsList = {[key: string]: Field}
 type FieldsListKeys = Array<string>
 
-const ERROR_REQUIRED = '* Required'
+const Constants = {
+  ERROR: 'ERROR',
+  ERROR_REQUIRED: '* Required',
+  ERROR_INVALID_EMAIL: 'Invalid Email',
+}
+
+const Validators = {
+  required: value => value == null ? Constants.ERROR_REQUIRED : undefined,
+  email: value => value && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value) ? Constants.ERROR_INVALID_EMAIL : undefined
+}
 
 class GenericFormFields {
   formName: string
@@ -48,15 +57,13 @@ class GenericFormFields {
   validate(values: any = {}){
     const errors = {}
     this.fieldsListKeys.forEach(k => {
-      if (!values[k]) {
-        if (this.fieldsList[k].required)
-          errors[k] = ERROR_REQUIRED
-      }
+      errors[k] = this.fieldsList[k].validator(values[k])
     })
     return errors
   }
 }
 export {
-  ERROR_REQUIRED
+  Constants,
+  Validators
 }
 export default GenericFormFields

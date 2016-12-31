@@ -1,24 +1,24 @@
-import ConfigFormFields, { ERROR_REQUIRED } from '../src/ConfigFormFields.js'
+import { GenericFormFields, Constants, Validators } from '../src'
 
-describe('ConfigFormFields init', ()=> {
+describe('GenericFormFields init', ()=> {
     const data = {
       email:{
         type: 'input',
         label: 'email',
-        placeholder: 'EMAIL',
+        validator: Validators.email,
         iconName: 'ios-person',
         default: 'my@email.com'
       },
       password:{
         type: 'input',
         label: 'password',
-        required: true,
+        validator: Validators.required,
         iconName: 'ios-lock',
         placeholder: 'PASSWORD',
         default: 'test',
       }
     }
-    const configFormFields = new ConfigFormFields('login', data)
+    const configFormFields = new GenericFormFields('login', data)
   // const names = configFormFields.getFieldsListKeys()
   it('Contains formName after getFormName()', () => {
     expect(configFormFields.getFormName()).toBe('login')
@@ -34,6 +34,11 @@ describe('ConfigFormFields init', ()=> {
   it('Contains errors after validate({email: "example@dot.com"})', () => {
     const errors = configFormFields.validate({email: 'example@dot.com'})
     expect(errors.email).toBeFalsy()
-    expect(errors.password).toBe(ERROR_REQUIRED)
+    expect(errors.password).toBe(Constants.ERROR_REQUIRED)
+  })
+  it('Contains errors after validate({email: "example@", password: "toto"})', () => {
+    const errors = configFormFields.validate({email: "example@", password: "toto"})
+    expect(errors.email).toBe(Constants.ERROR_INVALID_EMAIL)
+    expect(errors.password).toBeFalsy()
   })
 })
