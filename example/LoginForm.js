@@ -14,31 +14,26 @@ import {
   // Toggle
 } from 'redux-form-material-ui'
 // GENERIC REDUX FORM
-import { GenericFormFields, GenericForm, gReduxForm } from 'generic-redux-form'
-
-// validation functions
-const required = value => value == null ? ERROR_REQUIRED : undefined
-const email = value => value &&
-!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value) ? ERROR_INVALID_EMAIL : undefined
-
+import { GenericFormFields, GenericForm, gReduxForm, Validators } from 'generic-redux-form'
 
 const genericFormFields = new GenericFormFields('login', {
       email:{
         type: 'input',
         label: 'email',
-        validator: required,
+        validator: Validators.email,
+        component: TextField,
         placeholder: 'EMAIL',
+        default: 'my@email.com',
         iconName: 'ios-person',
-        default: 'my@email.com'
       },
       password:{
         type: 'input',
         label: 'password',
-        validator: email,
-        component:
-        iconName: 'ios-lock',
+        validator: Validators.required,
+        component: TextField,
         placeholder: 'PASSWORD',
         default: 'test',
+        iconName: 'ios-lock',
     }
   })
 
