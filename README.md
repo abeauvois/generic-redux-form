@@ -1,3 +1,8 @@
+[![npm version](https://badge.fury.io/js/generic-redux-form.svg)](https://badge.fury.io/js/generic-redux-form)
+
+`generic-redux-form` is under active development. APIs will change and things may still not work as expected. If you find
+  any issue, please [report it](https://github.com/abeauvois/generic-redux-form/issues). We'll do our best to fix it.
+
 # GenericReduxForm
 
 Create redux forms in a few lines of code and spend much less maintenance time on them.
@@ -10,7 +15,12 @@ npm install generic-redux-form
 # install with yarn
 yarn add generic-redux-form
 
+# run the tests
+cd node_modules/generic-redux-form
+npm test
+
 # run the example
+cd node_modules/generic-redux-form
 npm install OR yarn
 
 then
@@ -108,3 +118,8 @@ See the contributing docs.
 
 ## Changelog
 See the [release page](https://github.com/abeauvois/generic-redux-form/releases)
+
+
+License
+---
+`generic-redux-form` is [MIT](https://github.com/abeauvois/generic-redux-form/blob/master/LICENSE) licensed.

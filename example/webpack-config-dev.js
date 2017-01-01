@@ -2,15 +2,16 @@ var path = require('path');
 var webpack = require('webpack');
 
 module.exports = {
-  devtool: 'eval',
+  devtool: 'cheap-eval-source-map', //'eval',
+  'display-error-details': true,
   entry: [
     'babel-polyfill',
     'eventsource-polyfill', // necessary for hot reloading with IE
     'webpack-hot-middleware/client',
-    './example/index.js'
+    './src/index'
   ],
   output: {
-    path: path.join(__dirname, 'example/dist'),
+    path: path.join(__dirname, 'dist'),
     filename: 'bundle.js',
     publicPath: '/dist/'
   },
@@ -21,25 +22,23 @@ module.exports = {
   resolve: {
     modulesDirectories: [
       'src',
-      'node_modules'
+      'node_modules',
     ],
     extensions: [ '', '.json', '.js' ],
-    alias: {
-      'generic-redux-form': '../src/index.js',
+    alias:{
+      'generic-redux-form': 'generic-redux-form/src'
     }
   },
   module: {
     loaders: [
       {
         test: /\.jsx?/,
-        loaders: [ 'babel-loader' ],
-        include: [path.join(__dirname, 'src'), path.join(__dirname, 'example')]
+        loaders: [ 'babel-loader'],
+        include: [path.join(__dirname, 'src'), path.join(__dirname, 'node_modules/generic-redux-form/src')]
       },
       {
         test: /\.json$/,
-        loader: 'json-loader',
-        include: path.join(__dirname, '.')
-
+        loader: 'json-loader'
       }
     ]
   }

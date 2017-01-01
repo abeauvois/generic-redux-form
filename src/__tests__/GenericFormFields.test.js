@@ -1,4 +1,4 @@
-import { GenericFormFields, Constants, Validators } from '../src'
+import { GenericFormFields, Constants, Validators } from '../index.js'
 
 describe('GenericFormFields init', ()=> {
     const data = {

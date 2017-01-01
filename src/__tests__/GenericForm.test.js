@@ -5,7 +5,7 @@ import TestUtils from 'react-addons-test-utils'
 // import { combineReducers, createStore } from 'redux'
 // import { submit } from '../actions'
 
-import { GenericForm, GenericFormFields, Constants, Validators } from '../src'
+import { GenericForm, GenericFormFields, Constants, Validators } from '../index.js'
 
 describe('GenericForm init', ()=> {
   const data = {
