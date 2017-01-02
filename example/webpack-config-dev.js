@@ -2,7 +2,7 @@ var path = require('path');
 var webpack = require('webpack');
 
 module.exports = {
-  devtool: 'cheap-eval-source-map', //'eval',
+  devtool: 'eval', //'cheap-eval-source-map', //'eval',
   'display-error-details': true,
   entry: [
     'babel-polyfill',
