@@ -91,7 +91,7 @@ class GenericForm extends Component {
                 // case 'switch':
                 //   return renderFormSwitch(k)
               case 'dropdown':
-                console.log('dropdown')
+                // console.log('dropdown')
                 // return (
                 //   <Field key={k} name={label} component={component}>
                 //     <MenuItem value="Immobilier" primaryText="Immobilier"/>
@@ -109,7 +109,7 @@ class GenericForm extends Component {
                 )
               default:
                 if (k === 'FormButtons') return null
-                console.log('input')
+                // console.log('input')
                 return (
                   <Field key={k} name={label} component={component}
                     validate={validator}
