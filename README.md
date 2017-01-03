@@ -5,7 +5,10 @@
 
 # GenericReduxForm
 
-Create redux forms in a few lines of code and spend much less maintenance time on them.
+A Javascript library for making forms a breeze with JSON configurable file + Redux-Form
+
+## Demo
+https://abeauvois.github.io/generic-redux-form
 
 ## Usage
 ```
