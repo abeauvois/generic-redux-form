@@ -1,3 +1,0 @@
-{
-  "presets": ["es2015", "es2015-no-commonjs", "stage-1", "react"]
-}
