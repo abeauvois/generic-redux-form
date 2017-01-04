@@ -21,13 +21,12 @@ module.exports = {
   ],
   resolve: {
     modulesDirectories: [
-      // '/Users/entropicsynergies/Documents/generic-redux-form/src',
       'src',
       'node_modules',
     ],
     extensions: [ '', '.json', '.js' ],
     alias:{
-      'generic-redux-form': '/Users/entropicsynergies/Documents/generic-redux-form/src'
+      'generic-redux-form': 'lib'
     }
   },
   module: {
@@ -35,7 +34,7 @@ module.exports = {
       {
         test: /\.jsx?/,
         loaders: [ 'babel-loader'],
-        include: [path.join(__dirname, 'src'), '/Users/entropicsynergies/Documents/generic-redux-form/src'],//path.join(__dirname, 'node_modules/generic-redux-form/src')],
+        include: [path.join(__dirname, 'src'), path.join(__dirname, 'lib')],
         // exclude: [path.join(__dirname, 'node_modules')]
         // resolveLoader: { root: path.join(__dirname, "node_modules")}
       },

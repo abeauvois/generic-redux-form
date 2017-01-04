@@ -1,11 +1,13 @@
 var path = require('path');
 var webpack = require('webpack');
+var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
+  // context: path.join(__dirname, '..'),
   devtool: 'source-map',
   entry: [
     'babel-polyfill',
-    './src/index'
+    './src/index.js'
   ],
   output: {
     path: path.join(__dirname, 'dist'),
@@ -19,6 +21,10 @@ module.exports = {
         NODE_ENV: JSON.stringify('production')
       }
     }),
+    new CopyWebpackPlugin([{
+      from: path.join(__dirname, 'src/lib'), to: path.join(__dirname, '../src'), //flatten: true
+    }], {debug: 'info'}
+  ),
     new webpack.optimize.UglifyJsPlugin({
       compressor: {
         warnings: false
