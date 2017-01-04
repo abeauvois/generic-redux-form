@@ -37,7 +37,7 @@ class GenericForm extends Component {
         {
           names.map(k => {
             const field = genericFormFields.fieldsList[k]
-            const {type, label, labels, component, description, placeholder, defaultValue,
+            const {type, label, labels, labelPosition, component, description, placeholder, defaultValue,
             limits, onChange, validator, touched, error, ref, withRef} = field
 
             switch (type) {
@@ -85,6 +85,14 @@ class GenericForm extends Component {
               case 'radiobutton':
                 return (
                   <Field key={k} name={label} component={component}
+                    ref={ref} withRef={withRef}>
+                  </Field>
+                )
+              case 'toggle':
+                debugger
+                return (
+                  <Field key={k} name={label} component={component}
+                    label={label} labelPosition={labelPosition} defaultToggled={defaultValue}
                     ref={ref} withRef={withRef}>
                   </Field>
                 )

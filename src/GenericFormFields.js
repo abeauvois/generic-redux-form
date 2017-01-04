@@ -4,6 +4,7 @@
 type Field = {
   type: string,
   label: string,
+  labelPosition: string,
   iconType: string,
   iconLeftName?: string,
   iconRightName?: string,

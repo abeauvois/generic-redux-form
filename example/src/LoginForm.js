@@ -5,7 +5,7 @@ import { Card, CardActions, CardHeader, CardTitle, CardText } from 'material-ui/
 import { RadioButton } from 'material-ui/RadioButton'
 import MenuItem from 'material-ui/MenuItem'
 import RaisedButton from 'material-ui/RaisedButton'
-import { TextField, RadioButtonGroup, Checkbox, Slider, SelectField } from 'redux-form-material-ui'
+import { TextField, RadioButtonGroup, Checkbox, Slider, SelectField, Toggle } from 'redux-form-material-ui'
 // GENERIC REDUX FORM
 import { GenericFormFields, GenericForm, gReduxForm, Validators } from 'generic-redux-form'
 
@@ -48,6 +48,14 @@ const genericFormFields = new GenericFormFields('login', {
     limits: {min: 0, max: 50, step: 2},
     defaultValue: 6,
   },
+  published:{
+    type: 'toggle',
+    label: 'published',
+    labelPosition: 'right',
+    validator: Validators.noValidation,
+    component: Toggle,
+    defaultValue: false,
+  },
   // category:{
   //   type: 'dropdown',
   //   label: 'travel',
@@ -75,7 +83,6 @@ class LoginForm extends Component {
   constructor (props) {
     super(props)
   }
-
   render() {
     return (
         <Card>
