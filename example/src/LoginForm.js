@@ -48,14 +48,14 @@ const genericFormFields = new GenericFormFields('login', {
     limits: {min: 0, max: 50, step: 2},
     defaultValue: 6,
   },
-  published:{
-    type: 'toggle',
-    label: 'published',
-    labelPosition: 'right',
-    validator: Validators.noValidation,
-    component: Toggle,
-    defaultValue: false,
-  },
+  // published:{
+  //   type: 'toggle',
+  //   label: 'Published',
+  //   labelPosition: 'right',
+  //   validator: Validators.noValidation,
+  //   component: Toggle,
+  //   defaultValue: false,
+  // },
   // category:{
   //   type: 'dropdown',
   //   label: 'travel',
