@@ -72,6 +72,7 @@ const genericFormFields = new GenericFormFields('login', {
   },
   options:{
     type: 'checkbox',
+    label: 'options',
     labels: ['travel','real estate', 'automotive'],
     validator: Validators.noValidation,
     component: Checkbox,

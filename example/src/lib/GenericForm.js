@@ -4,6 +4,47 @@ import { Field, reduxForm } from 'redux-form'
 // import SelectField from 'material-ui/SelectField'
 // import MenuItem from 'material-ui/MenuItem'
 
+const Multiple = (props) => {
+  const {type, label, labels, labelPosition, component, description, placeholder, defaultValue,
+  limits, onChange, validator, touched, error, ref, withRef} = props
+
+  let attribs = {
+    component,
+    validate:validator,
+    defaultValue,
+    ref,
+    withRef
+  }
+  switch (type) {
+    case 'slider':
+      if (!limits) {
+        throw new Error('GenericForm Slider requires "limits" prop, check your GenericFormFields data.')
+      }
+      attribs = {
+        ...attribs,
+        description,
+        format: null,
+        min: limits.min,
+        max: limits.max,
+        step: limits.step,
+        onChange
+      }
+      break
+    default:
+  }
+  if (props.labels && props.labels.length > 0){
+    return (
+      <div>
+        {
+          props.labels.map(label => <Field {...attribs} name={label} key={label} label={label}/>)
+        }
+      </div>
+    )
+  } else {
+    return <Field {...attribs} name={label} label={label}/>
+  }
+}
+
 class GenericForm extends Component {
   static contextTypes = {
     _reduxForm: PropTypes.object
@@ -35,12 +76,12 @@ class GenericForm extends Component {
   reset(){
     console.log('reset')
   }
-
   render(){
     if (!this.props.genericFormFields) return null
     const {genericFormFields, handleSubmit, pristine, submitting } = this.props
     const names = genericFormFields.fieldsListKeys
     const FormButtons = genericFormFields.fieldsList['FormButtons'].component
+
     return (
       <form onSubmit={handleSubmit(this.submit)}>
         {
@@ -55,42 +96,29 @@ class GenericForm extends Component {
               // case 'avatar':
               //   return this.renderFormAvatar(k)
               case 'slider':
-                if (!limits) {
-                  throw new Error('GenericForm Slider requires "limits" prop, check your GenericFormFields data.')
-                }
-                return (
-                  <Field key={k} name={label} component={component}
-                    validate={validator} defaultValue={defaultValue}
-                    description={description}
-                    format={null}
-                    min={limits.min}
-                    max={limits.max}
-                    step={limits.step}
-                    onChange={onChange}
-                    ref={ref} withRef={withRef}/>
-                )
               case 'checkbox':
-                if (labels && labels.length > 0){
-                  return (
-                    <div key={k}>
-                      {
-                        labels.map(label =>
-                          <Field key={label} name={label} component={component}
-                            label={label}
-                            onCheck={value => console.log('onCheck '+label, value )}
-                          />
-                        )
-                      }
-                    </div>
-                  )
-                } else {
-                  return (
-                    <Field key={k} name={label} component={component}
-                      label={label}
-                      onCheck={value => console.log('onCheck ', value )}
-                    />
-                  )
-                }
+                return <Multiple key={k} {...field}/>
+                // if (labels && labels.length > 0){
+                //   return (
+                //     <div key={k}>
+                //       {
+                //         labels.map(label =>
+                //           <Field key={label} name={label} component={component}
+                //             label={label}
+                //             onCheck={value => console.log('onCheck '+label, value )}
+                //           />
+                //         )
+                //       }
+                //     </div>
+                //   )
+                // } else {
+                //   return (
+                //     <Field key={k} name={label} component={component}
+                //       label={label}
+                //       onCheck={value => console.log('onCheck ', value )}
+                //     />
+                //   )
+                // }
               case 'radiobutton':
                 return (
                   <Field key={k} name={label} component={component}

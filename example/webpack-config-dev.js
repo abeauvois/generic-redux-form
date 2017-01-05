@@ -2,8 +2,7 @@ var path = require('path');
 var webpack = require('webpack');
 
 module.exports = {
-  devtool: 'eval', //'cheap-eval-source-map', //'eval',
-  'display-error-details': true,
+  devtool: 'eval', //'cheap-eval-source-map',
   entry: [
     'babel-polyfill',
     'eventsource-polyfill', // necessary for hot reloading with IE
