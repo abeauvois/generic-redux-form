@@ -25,7 +25,7 @@ module.exports = {
     ]
   },
   output: {
-    library: 'GenricReduxForm',
+    library: 'GenericReduxForm',
     libraryTarget: 'umd'
   },
   plugins: plugins,

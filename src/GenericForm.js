@@ -1,8 +1,62 @@
 // @flow
 import React, { Component, PropTypes } from 'react'
 import { Field, reduxForm } from 'redux-form'
+import {List, ListItem} from 'material-ui/List' // TODO: create an UI independent List component
 // import SelectField from 'material-ui/SelectField'
 // import MenuItem from 'material-ui/MenuItem'
+
+const Multiple = (props) => {
+  const {type, label, labels, labelPosition, component, description, placeholder, defaultValue,
+  limits, onChange, validator, touched, error, ref, withRef} = props
+
+  let attribs = {
+    component,
+    validate:validator,
+    defaultValue,
+    ref,
+    withRef
+  }
+  switch (type) {
+    case 'slider':
+      if (!limits) {
+        throw new Error('GenericForm Slider requires "limits" prop, check your GenericFormFields data.')
+      }
+      attribs = {
+        ...attribs,
+        style: {overflow: 'visible'},
+        description,
+        format: null,
+        min: limits.min,
+        max: limits.max,
+        step: limits.step,
+        onChange
+      }
+      break
+    case 'toggle':
+      if (!labelPosition) {
+        throw new Error('GenericToogle requires labelPosition prop, check your GenericFormFields data.')
+      }
+      attribs = {
+        ...attribs,
+        style: {overflow: 'visible'},
+        labelPosition,
+        defaultToggled: defaultValue
+      }
+      break
+    default:
+  }
+  if (props.labels && props.labels.length > 0){
+    return (
+      <List>
+        {
+          props.labels.map(label => <Field {...attribs} name={label} key={label} label={label}/>)
+        }
+      </List>
+    )
+  } else {
+    return <Field {...attribs} name={label} label={label}/>
+  }
+}
 
 class GenericForm extends Component {
   static contextTypes = {
@@ -23,10 +77,10 @@ class GenericForm extends Component {
     this.reset = this.reset.bind(this)
   }
   componentDidMount() {
-    this.refs.firstField            // the Field
-      .getRenderedComponent() // on Field, returns ReduxFormMaterialUITextField
-      .getRenderedComponent() // on ReduxFormMaterialUITextField, returns TextField
-      .focus()                // on TextField
+    // this.refs.firstField            // the Field
+    //   .getRenderedComponent() // on Field, returns ReduxFormMaterialUITextField
+    //   .getRenderedComponent() // on ReduxFormMaterialUITextField, returns TextField
+    //   .focus()                // on TextField
   }
   // handleChange = (event, index, value) => this.setState({value})
   submit(){
@@ -35,12 +89,12 @@ class GenericForm extends Component {
   reset(){
     console.log('reset')
   }
-
   render(){
     if (!this.props.genericFormFields) return null
     const {genericFormFields, handleSubmit, pristine, submitting } = this.props
     const names = genericFormFields.fieldsListKeys
     const FormButtons = genericFormFields.fieldsList['FormButtons'].component
+
     return (
       <form onSubmit={handleSubmit(this.submit)}>
         {
@@ -55,57 +109,16 @@ class GenericForm extends Component {
               // case 'avatar':
               //   return this.renderFormAvatar(k)
               case 'slider':
-                if (!limits) {
-                  throw new Error('GenericForm Slider requires "limits" prop, check your GenericFormFields data.')
-                }
-                return (
-                  <Field key={k} name={label} component={component}
-                    validate={validator} defaultValue={defaultValue}
-                    description={description}
-                    format={null}
-                    min={limits.min}
-                    max={limits.max}
-                    step={limits.step}
-                    onChange={onChange}
-                    ref={ref} withRef={withRef}/>
-                )
               case 'checkbox':
-                if (labels && labels.length > 0){
-                  return (
-                    <div key={k}>
-                      {
-                        labels.map(label =>
-                          <Field key={label} name={label} component={component}
-                            label={label}
-                            onCheck={value => console.log('onCheck '+label, value )}
-                          />
-                        )
-                      }
-                    </div>
-                  )
-                } else {
-                  return (
-                    <Field key={k} name={label} component={component}
-                      label={label}
-                      onCheck={value => console.log('onCheck ', value )}
-                    />
-                  )
-                }
+              case 'toggle':
+                return <Multiple key={k} {...field}/>
               case 'radiobutton':
                 return (
                   <Field key={k} name={label} component={component}
                     ref={ref} withRef={withRef}>
                   </Field>
                 )
-              case 'toggle':
-                return (
-                  <Field key={k} name={label} component={component}
-                    label={label} labelPosition={labelPosition} defaultToggled={defaultValue}
-                    ref={ref} withRef={withRef}>
-                  </Field>
-                )
-                // case 'switch':
-                //   return renderFormSwitch(k)
+
               case 'dropdown':
                 return (
                   <Field key={k} name={label} component={component}
@@ -118,7 +131,6 @@ class GenericForm extends Component {
                 )
               default:
                 if (k === 'FormButtons') return null
-                // console.log('input')
                 return (
                   <Field key={k} name={label} component={component}
                     validate={validator}

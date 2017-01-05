@@ -1,7 +1,7 @@
 // @flow
 import React, { Component, PropTypes } from 'react'
 import { Field, reduxForm } from 'redux-form'
-import {List, ListItem} from 'material-ui/List'
+import {List, ListItem} from 'material-ui/List' // TODO: create an UI independent List component
 // import SelectField from 'material-ui/SelectField'
 // import MenuItem from 'material-ui/MenuItem'
 
@@ -30,6 +30,17 @@ const Multiple = (props) => {
         max: limits.max,
         step: limits.step,
         onChange
+      }
+      break
+    case 'toggle':
+      if (!labelPosition) {
+        throw new Error('GenericToogle requires labelPosition prop, check your GenericFormFields data.')
+      }
+      attribs = {
+        ...attribs,
+        style: {overflow: 'visible'},
+        labelPosition,
+        defaultToggled: defaultValue
       }
       break
     default:
@@ -66,10 +77,10 @@ class GenericForm extends Component {
     this.reset = this.reset.bind(this)
   }
   componentDidMount() {
-    this.refs.firstField            // the Field
-      .getRenderedComponent() // on Field, returns ReduxFormMaterialUITextField
-      .getRenderedComponent() // on ReduxFormMaterialUITextField, returns TextField
-      .focus()                // on TextField
+    // this.refs.firstField            // the Field
+    //   .getRenderedComponent() // on Field, returns ReduxFormMaterialUITextField
+    //   .getRenderedComponent() // on ReduxFormMaterialUITextField, returns TextField
+    //   .focus()                // on TextField
   }
   // handleChange = (event, index, value) => this.setState({value})
   submit(){
@@ -99,6 +110,7 @@ class GenericForm extends Component {
               //   return this.renderFormAvatar(k)
               case 'slider':
               case 'checkbox':
+              case 'toggle':
                 return <Multiple key={k} {...field}/>
               case 'radiobutton':
                 return (
@@ -106,15 +118,7 @@ class GenericForm extends Component {
                     ref={ref} withRef={withRef}>
                   </Field>
                 )
-              case 'toggle':
-                return (
-                  <Field key={k} name={label} component={component}
-                    label={label} labelPosition={labelPosition} defaultToggled={defaultValue}
-                    ref={ref} withRef={withRef}>
-                  </Field>
-                )
-                // case 'switch':
-                //   return renderFormSwitch(k)
+
               case 'dropdown':
                 return (
                   <Field key={k} name={label} component={component}
@@ -127,7 +131,6 @@ class GenericForm extends Component {
                 )
               default:
                 if (k === 'FormButtons') return null
-                // console.log('input')
                 return (
                   <Field key={k} name={label} component={component}
                     validate={validator}

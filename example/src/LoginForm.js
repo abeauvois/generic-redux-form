@@ -1,36 +1,15 @@
 import injectTouchTapEvent from 'react-tap-event-plugin'
-injectTouchTapEvent()
+injectTouchTapEvent() // Necessary for material-ui lib
 // UI VENDORS
 import React, { Component } from 'react'
 // import { Container, Header, Title, Content, Button, Footer, Text } from 'native-base'
 import { Card, CardActions, CardHeader, CardTitle, CardText } from 'material-ui/Card'
 import { RadioButton } from 'material-ui/RadioButton'
 import RaisedButton from 'material-ui/RaisedButton'
-import Avatar from 'material-ui/Avatar'
-import {List, ListItem} from 'material-ui/List'
 import MenuItem from 'material-ui/MenuItem'
 import { TextField, RadioButtonGroup, Checkbox, SelectField, Slider, Toggle } from 'redux-form-material-ui'
 // GENERIC REDUX FORM
-import { GenericFormFields, GenericForm, gReduxForm, Validators } from 'generic-redux-form'
-
-const GenericSlider = (props) => {
-  return (
-    <ListItem style={{width: 180, paddingLeft: 60}}
-      disabled
-      primaryText={props.label.toUpperCase()}
-      leftAvatar={
-        <Avatar
-          style={{left: 0}}
-          color={'white'}
-        >
-          {props.input.value || 0}
-        </Avatar>
-      }
-      secondaryText={<Slider sliderStyle={{marginTop: 0}} {...props}/>}
-    >
-    </ListItem>
-  )
-}
+import { GenericFormFields, GenericForm, GenericSlider, GenericToggle, gReduxForm, Validators } from 'generic-redux-form'
 
 const genericFormFields = new GenericFormFields('login', {
   FormButtons:{
@@ -80,6 +59,15 @@ const genericFormFields = new GenericFormFields('login', {
     component: Toggle,
     defaultValue: false,
   },
+  settings:{
+    type: 'toggle',
+    label: 'settings',
+    labels: ['PRICE OPTIMIZATION','TIME OPTIMIZATION', 'QUALITY OPTIMIZATION'],
+    labelPosition: 'right',
+    validator: Validators.noValidation,
+    component: GenericToggle,
+    defaultValue: false,
+  },
   category:{
     type: 'dropdown',
     label: 'category',
@@ -123,7 +111,6 @@ class LoginForm extends Component {
           <CardText>
             <GenericForm {...this.props}/>
           </CardText>
-
         </Card>
     )
   }
