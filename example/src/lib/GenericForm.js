@@ -1,6 +1,7 @@
 // @flow
 import React, { Component, PropTypes } from 'react'
 import { Field, reduxForm } from 'redux-form'
+import {List, ListItem} from 'material-ui/List'
 // import SelectField from 'material-ui/SelectField'
 // import MenuItem from 'material-ui/MenuItem'
 
@@ -22,6 +23,7 @@ const Multiple = (props) => {
       }
       attribs = {
         ...attribs,
+        style: {overflow: 'visible'},
         description,
         format: null,
         min: limits.min,
@@ -34,11 +36,11 @@ const Multiple = (props) => {
   }
   if (props.labels && props.labels.length > 0){
     return (
-      <div>
+      <List>
         {
           props.labels.map(label => <Field {...attribs} name={label} key={label} label={label}/>)
         }
-      </div>
+      </List>
     )
   } else {
     return <Field {...attribs} name={label} label={label}/>
@@ -98,27 +100,6 @@ class GenericForm extends Component {
               case 'slider':
               case 'checkbox':
                 return <Multiple key={k} {...field}/>
-                // if (labels && labels.length > 0){
-                //   return (
-                //     <div key={k}>
-                //       {
-                //         labels.map(label =>
-                //           <Field key={label} name={label} component={component}
-                //             label={label}
-                //             onCheck={value => console.log('onCheck '+label, value )}
-                //           />
-                //         )
-                //       }
-                //     </div>
-                //   )
-                // } else {
-                //   return (
-                //     <Field key={k} name={label} component={component}
-                //       label={label}
-                //       onCheck={value => console.log('onCheck ', value )}
-                //     />
-                //   )
-                // }
               case 'radiobutton':
                 return (
                   <Field key={k} name={label} component={component}

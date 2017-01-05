@@ -6,11 +6,31 @@ import React, { Component } from 'react'
 import { Card, CardActions, CardHeader, CardTitle, CardText } from 'material-ui/Card'
 import { RadioButton } from 'material-ui/RadioButton'
 import RaisedButton from 'material-ui/RaisedButton'
-// import SelectField from 'material-ui/SelectField'
+import Avatar from 'material-ui/Avatar'
+import {List, ListItem} from 'material-ui/List'
 import MenuItem from 'material-ui/MenuItem'
 import { TextField, RadioButtonGroup, Checkbox, SelectField, Slider, Toggle } from 'redux-form-material-ui'
 // GENERIC REDUX FORM
 import { GenericFormFields, GenericForm, gReduxForm, Validators } from 'generic-redux-form'
+
+const GenericSlider = (props) => {
+  return (
+    <ListItem style={{width: 180, paddingLeft: 60}}
+      disabled
+      primaryText={props.label.toUpperCase()}
+      leftAvatar={
+        <Avatar
+          style={{left: 0}}
+          color={'white'}
+        >
+          {props.input.value || 0}
+        </Avatar>
+      }
+      secondaryText={<Slider sliderStyle={{marginTop: 0}} {...props}/>}
+    >
+    </ListItem>
+  )
+}
 
 const genericFormFields = new GenericFormFields('login', {
   FormButtons:{
@@ -43,13 +63,14 @@ const genericFormFields = new GenericFormFields('login', {
     </RadioButtonGroup>,
     defaultValue: 'man',
   },
-  proximity:{
+  criterions:{
     type: 'slider',
-    label: 'proximity',
+    label: 'criterions',
+    labels: ['value','effort', 'risk'],
     validator: Validators.noValidation,
-    component: Slider,
-    limits: {min: 0, max: 50, step: 2},
-    defaultValue: 6,
+    component: GenericSlider,
+    limits: {min: 0, max: 50, step: 1},
+    defaultValue: 0,
   },
   published:{
     type: 'toggle',
