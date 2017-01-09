@@ -1,5 +1,6 @@
-import { Multiple, GenericSlider, GenericToggle } from './GenericComponents.js'
+import { Multiple, GenericSlider, GenericToggle, CheckBoxRFNB, SwitchRFNB, RadioRFNB } from './GenericComponents.js'
 
 export {
-  Multiple, GenericSlider, GenericToggle
+  Multiple, GenericSlider, GenericToggle,
+  CheckBoxRFNB, SwitchRFNB, RadioRFNB
 }

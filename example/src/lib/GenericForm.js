@@ -60,14 +60,8 @@ class GenericForm extends Component {
               case 'slider':
               case 'checkbox':
               case 'toggle':
+              case 'radio':
                 return <Multiple key={k} {...field}/>
-              case 'radiobutton':
-                return (
-                  <Field key={k} name={label} component={component}
-                    ref={ref} withRef={withRef}>
-                  </Field>
-                )
-
               case 'dropdown':
                 return (
                   <Field key={k} name={label} component={component}

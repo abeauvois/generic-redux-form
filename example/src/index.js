@@ -23,15 +23,6 @@ function Entry() {
     </Provider>
   )
 }
-// ReactDOM.render(
-//   <Provider store={store}>
-//     <MuiThemeProvider>
-//       <LoginForm/>
-//     </MuiThemeProvider>
-//   </Provider>,
-//   document.getElementById('react-root')
-// )
-
 //Use IOS theme for our web app
 OSTheme.setOSTheme('ios');
 
