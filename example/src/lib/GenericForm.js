@@ -1,4 +1,6 @@
 // @flow
+import injectTouchTapEvent from 'react-tap-event-plugin'
+injectTouchTapEvent() // Necessary for material-ui lib
 import React, { Component, PropTypes } from 'react'
 import { Field, reduxForm } from 'redux-form'
 

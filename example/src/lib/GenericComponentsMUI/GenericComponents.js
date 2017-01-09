@@ -1,5 +1,4 @@
-import injectTouchTapEvent from 'react-tap-event-plugin'
-injectTouchTapEvent() // Necessary for material-ui lib
+
 import React, { Component } from 'react'
 import { Field } from 'redux-form'
 // UI VENDORS

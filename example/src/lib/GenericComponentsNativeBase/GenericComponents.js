@@ -45,7 +45,18 @@ const Multiple = (props) => {
         ...attribs,
         style: {overflow: 'visible'},
         labelPosition,
-        defaultToggled: defaultValue
+        defaultValue: defaultValue
+      }
+      break
+    case 'checkbox':
+      if (!labelPosition) {
+        throw new Error('GenericCheckBox requires labelPosition prop, check your GenericFormFields data.')
+      }
+      attribs = {
+        ...attribs,
+        style: {overflow: 'visible'},
+        labelPosition,
+        defaultValue: defaultValue
       }
       break
     default:

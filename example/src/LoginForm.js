@@ -1,8 +1,8 @@
 
 // UI VENDORS
-import React, { Component } from 'react'
+import React, { Component, createElement } from 'react'
 import { View } from 'react-native'
-import { Card, CardItem, Row, Title,Text, Input, Radio, CheckBox, Slider, Switch, Button } from 'native-base'
+import { CheckBox, List, ListItem, Card, CardItem, Row, Title,Text, Input, Radio, Slider, Switch, Button } from 'native-base'
 // import { Card, CardHeader, CardTitle, CardText } from 'material-ui/Card'
 // import { RadioButton } from 'material-ui/RadioButton'
 // import RaisedButton from 'material-ui/RaisedButton'
@@ -29,26 +29,92 @@ const CardText = CardItem
 
 const RadioButtonGroup = View
 const RadioButton = (props) =>
-<Row>
-  <Radio selected={props.value}/>
-  <Text>{props.label}</Text>
-</Row>
+  <Row>
+    <Radio selected={props.value}/>
+    <Text>{props.label}</Text>
+  </Row>
 
 const TextField = Input // TODO: InputGroup
-const Checkbox = CheckBox
+const Checkbox = (props) =>
+  <ListItem onClick={props.onChange} >
+    <Text>{props.label}</Text>
+    <CheckBox checked={props.checked}/>
+  </ListItem>
 // const SelectField = Picker
 // const Item = Picker.Item
 // const MenuItem = (props) => <Picker.Item label={props.label} value={props.primaryText}/>
 const Toggle = (props) =>
-<Row>
-  <Text>{props.label}</Text>
-  <Switch/>
-</Row>
+  <Row>
+    <Text>{props.label}</Text>
+    <Switch value={props.value} onValueChange={props.onValueChange}/>
+  </Row>
 
 const RaisedButton = (props) =>
-<Button>
-  {props.label}
-</Button>
+  <Button>
+    {props.label}
+  </Button>
+
+/**
+ * Creates a component class that renders the given Native Base component
+ * Inspired by erikras/redux-form-material-ui
+ * @param NativeBaseComponent The material ui component to render
+ * @param mapProps A mapping of props provided by redux-form to the props the Native Base
+ * component needs
+ */
+function createComponent(NativeBaseComponent, mapProps) {
+  class InputComponent extends Component {
+    getRenderedComponent() {
+      return this.refs.component
+    }
+    render() {
+      return createElement(NativeBaseComponent, {
+        ...mapProps(this.props),
+        ref: 'component'
+      })
+    }
+  }
+  InputComponent.displayName = `ReduxFormNativeBase${NativeBaseComponent.name}`
+  return InputComponent
+}
+
+// import CheckBox from 'native-base/Components/Widgets/CheckBox'
+
+const CheckBoxRNRFNB = createComponent(
+  Checkbox,
+  ({
+    input: {
+      onChange,
+      value,
+      ...inputProps
+    },
+    meta,
+    ...props
+  }) => ({
+    ...inputProps,
+    ...props,
+    checked: !!value ? true : false,
+    // onClick ? OnChange ? onPress ?
+    onChange: () => onChange(!value)
+  })
+)
+const SwitchRNRFNB = createComponent(
+  Toggle,
+  ({
+    input: {
+      onChange,
+      value,
+      ...inputProps
+    },
+    meta,
+    ...props
+  }) => ({
+    ...inputProps,
+    ...props,
+    value: !!value ? true : false,
+    // onClick ? OnChange ? onPress ?
+    onValueChange: () => onChange(!value)
+  })
+)
 
 const genericFormFields = new GenericFormFields('login', {
   FormButtons:{
@@ -107,7 +173,7 @@ const genericFormFields = new GenericFormFields('login', {
     labels: ['PRICE OPTIMIZATION','TIME OPTIMIZATION', 'QUALITY OPTIMIZATION'],
     labelPosition: 'right',
     validator: Validators.noValidation,
-    component: Toggle, //GenericToggle,
+    component: SwitchRNRFNB, //GenericToggle,
     defaultValue: false,
   },
   category:{
@@ -121,14 +187,15 @@ const genericFormFields = new GenericFormFields('login', {
     </SelectField>,
     defaultValue: "Voyage",
   },
-  // options:{
-  //   type: 'checkbox',
-  //   label: 'options',
-  //   labels: ['travel','real estate', 'automotive'],
-  //   validator: Validators.noValidation,
-  //   component: Checkbox,
-  //   defaultValue: false,
-  // },
+  options:{
+    type: 'checkbox',
+    label: 'options',
+    labelPosition: 'left',
+    labels: ['travel','real estate', 'automotive'],
+    validator: Validators.noValidation,
+    component: CheckBoxRNRFNB,
+    defaultValue: true,
+  },
 })
 
 class LoginForm extends Component {
@@ -136,6 +203,7 @@ class LoginForm extends Component {
     super(props)
     this.state = {
       value: "key0",
+      switch: true,
     }
     this.handleChange = this.handleChange.bind(this)
   }
@@ -146,6 +214,9 @@ class LoginForm extends Component {
           <CardHeader title="Generic Redux Form" subtitle="Native Base Example"></CardHeader>
           <CardTitle>TITLE</CardTitle>
           <CardText>
+            {/* <Checkbox label="todo" checked={true} onChange={() => console.log('clicked')}/> */}
+
+            {/* <SwitchRNRFNB value={this.state.switch} onValueChange={()=>this.setState({switch: !this.state.switch})}/> */}
             <GenericForm {...this.props}/>
           </CardText>
         </Card>
