@@ -1,62 +1,6 @@
 // @flow
 import React, { Component, PropTypes } from 'react'
 import { Field, reduxForm } from 'redux-form'
-import {List, ListItem} from 'material-ui/List' // TODO: create an UI independent List component
-// import SelectField from 'material-ui/SelectField'
-// import MenuItem from 'material-ui/MenuItem'
-
-const Multiple = (props) => {
-  const {type, label, labels, labelPosition, component, description, placeholder, defaultValue,
-  limits, onChange, validator, touched, error, ref, withRef} = props
-
-  let attribs = {
-    component,
-    validate:validator,
-    defaultValue,
-    ref,
-    withRef
-  }
-  switch (type) {
-    case 'slider':
-      if (!limits) {
-        throw new Error('GenericForm Slider requires "limits" prop, check your GenericFormFields data.')
-      }
-      attribs = {
-        ...attribs,
-        style: {overflow: 'visible'},
-        description,
-        format: null,
-        min: limits.min,
-        max: limits.max,
-        step: limits.step,
-        onChange
-      }
-      break
-    case 'toggle':
-      if (!labelPosition) {
-        throw new Error('GenericToogle requires labelPosition prop, check your GenericFormFields data.')
-      }
-      attribs = {
-        ...attribs,
-        style: {overflow: 'visible'},
-        labelPosition,
-        defaultToggled: defaultValue
-      }
-      break
-    default:
-  }
-  if (props.labels && props.labels.length > 0){
-    return (
-      <List>
-        {
-          props.labels.map(label => <Field {...attribs} name={label} key={label} label={label}/>)
-        }
-      </List>
-    )
-  } else {
-    return <Field {...attribs} name={label} label={label}/>
-  }
-}
 
 class GenericForm extends Component {
   static contextTypes = {
@@ -93,8 +37,11 @@ class GenericForm extends Component {
     if (!this.props.genericFormFields) return null
     const {genericFormFields, handleSubmit, pristine, submitting } = this.props
     const names = genericFormFields.fieldsListKeys
-    const FormButtons = genericFormFields.fieldsList['FormButtons'].component
-
+    const FormButtons = genericFormFields.fieldsList['FormButtons'] && genericFormFields.fieldsList['FormButtons'].component
+    const Multiple = genericFormFields.fieldsList['Multiple'] && genericFormFields.fieldsList['Multiple'].component
+    if (!Multiple) {
+      throw new Error('genericFormFields must provide a Multiple component')
+    }
     return (
       <form onSubmit={handleSubmit(this.submit)}>
         {
@@ -102,7 +49,7 @@ class GenericForm extends Component {
             const field = genericFormFields.fieldsList[k]
             const {type, label, labels, labelPosition, component, description, placeholder, defaultValue,
             limits, onChange, validator, touched, error, ref, withRef} = field
-
+            // debugger
             switch (type) {
               // case 'image':
               //   return renderFormImage(k)
@@ -130,7 +77,7 @@ class GenericForm extends Component {
                   </Field>
                 )
               default:
-                if (k === 'FormButtons') return null
+                if ((k === 'FormButtons') || (k === 'Multiple')) return null
                 return (
                   <Field key={k} name={label} component={component}
                     validate={validator}
