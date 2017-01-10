@@ -13,7 +13,7 @@ import LoginForm from './LoginForm.js'
 const reducer = combineReducers({
   form: reduxFormReducer // mounted under "form"
 })
-const store = createStore(reducer)
+const store = createStore(reducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
 function Entry() {
   return (
     <Provider store={store}>

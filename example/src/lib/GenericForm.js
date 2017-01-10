@@ -40,17 +40,19 @@ class GenericForm extends Component {
     const {genericFormFields, handleSubmit, pristine, submitting } = this.props
     const names = genericFormFields.fieldsListKeys
     const FormButtons = genericFormFields.fieldsList['FormButtons'] && genericFormFields.fieldsList['FormButtons'].component
-    const Multiple = genericFormFields.fieldsList['Multiple'] && genericFormFields.fieldsList['Multiple'].component
-    if (!Multiple) {
-      throw new Error('genericFormFields must provide a Multiple component')
-    }
+
     return (
       <form onSubmit={handleSubmit(this.submit)}>
         {
           names.map(k => {
-            const field = genericFormFields.fieldsList[k]
+            const isMultiple = l => l && l.length && (l.length > 0)
+            const config = genericFormFields.fieldsList[k]
             const {type, label, labels, labelPosition, component, description, placeholder, defaultValue,
-            limits, onChange, validator, touched, error, ref, withRef} = field
+            limits, onChange, validator, touched, error, ref, withRef} = config
+
+            // if (isMultiple(labels) ) {
+            //   TheComponent = labels.map(label => )
+            // }
             // debugger
             switch (type) {
               // case 'image':
@@ -61,7 +63,8 @@ class GenericForm extends Component {
               case 'checkbox':
               case 'toggle':
               case 'radio':
-                return <Multiple key={k} {...field}/>
+                debugger
+                  return <Field key={k} name={label} component={component(config)} value={defaultValue} ref={ref} withRef={withRef}/>
               case 'dropdown':
                 return (
                   <Field key={k} name={label} component={component}

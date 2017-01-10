@@ -2,7 +2,8 @@
 // UI VENDORS
 import React, { Component } from 'react'
 import { View } from 'react-native'
-import { CheckBox, List, ListItem, Card, CardItem, Row, Title,Text, Input, Radio, Slider, Switch, Button } from 'native-base'
+import { CheckBox, List, ListItem, Card, CardItem, Row, Title,
+  Text, Input, Radio, Slider, Switch, Button } from 'native-base'
 // import { Card, CardHeader, CardTitle, CardText } from 'material-ui/Card'
 // import { RadioButton } from 'material-ui/RadioButton'
 // import RaisedButton from 'material-ui/RaisedButton'
@@ -13,7 +14,8 @@ import MenuItem from 'material-ui/MenuItem'
 
 // GENERIC REDUX FORM
 import { GenericFormFields, GenericForm, gReduxForm, Validators } from 'generic-redux-form'
-import { Multiple, GenericSlider, GenericToggle, CheckBoxRFNB, SwitchRFNB, RadioRFNB } from 'generic-redux-form/GenericComponentsNativeBase'
+import { Multiple, GenericSlider, GenericToggle, MakeMultiple,
+  WrappedCheckbox, WrappedSwitch, WrappedRadio, MakeMultipleRFNB } from 'generic-redux-form/GenericComponentsNativeBase'
 
 const CardHeader = (props) => {
   return (
@@ -33,9 +35,9 @@ const genericFormFields = new GenericFormFields('login', {
   FormButtons:{
     component: (props) => <Button>{props.label}</Button>,
   },
-  Multiple:{
-    component: Multiple,
-  },
+  // Multiple:{
+  //   component: (props) => <MultipleRFNB>{props.children}</MultipleRFNB>,
+  // },
   // email:{
   //   label: 'email',
   //   validator: [Validators.email,Validators.required],
@@ -55,10 +57,11 @@ const genericFormFields = new GenericFormFields('login', {
   sex:{
     type: 'radio',
     label: 'sex',
+    labelPosition: 'right',
     labels: ['Male','Female'],
     validator: Validators.noValidation,
-    component: RadioRFNB,
-    defaultValue: 'man',
+    component: MakeMultiple(List, WrappedRadio),
+    defaultValue: [true, false],
   },
   // criterions:{
   //   type: 'slider',
@@ -77,35 +80,35 @@ const genericFormFields = new GenericFormFields('login', {
   //   component: Toggle,
   //   defaultValue: false,
   // },
-  settings:{
-    type: 'toggle',
-    label: 'settings',
-    labels: ['PRICE OPTIMIZATION','TIME OPTIMIZATION', 'QUALITY OPTIMIZATION'],
-    labelPosition: 'right',
-    validator: Validators.noValidation,
-    component: SwitchRFNB, //GenericToggle,
-    defaultValue: false,
-  },
-  category:{
-    type: 'dropdown',
-    label: 'category',
-    validator: Validators.noValidation,
-    component: (props) => <SelectField {...props}>
-      <MenuItem value="Immobilier" primaryText="Immobilier"/>
-      <MenuItem value="Auto" primaryText="Auto"/>
-      <MenuItem value="Voyage" primaryText="Voyage"/>
-    </SelectField>,
-    defaultValue: "Voyage",
-  },
-  options:{
-    type: 'checkbox',
-    label: 'options',
-    labelPosition: 'left',
-    labels: ['travel','real estate', 'automotive'],
-    validator: Validators.noValidation,
-    component: CheckBoxRFNB,
-    defaultValue: true,
-  },
+  // settings:{
+  //   type: 'toggle',
+  //   label: 'settings',
+  //   labels: ['PRICE OPTIMIZATION','TIME OPTIMIZATION', 'QUALITY OPTIMIZATION'],
+  //   labelPosition: 'right',
+  //   validator: Validators.noValidation,
+  //   component: MultipleRFNB, //GenericToggle,
+  //   defaultValue: [false, false, false],
+  // },
+  // category:{
+  //   type: 'dropdown',
+  //   label: 'category',
+  //   validator: Validators.noValidation,
+  //   component: (props) => <SelectField {...props}>
+  //     <MenuItem value="Immobilier" primaryText="Immobilier"/>
+  //     <MenuItem value="Auto" primaryText="Auto"/>
+  //     <MenuItem value="Voyage" primaryText="Voyage"/>
+  //   </SelectField>,
+  //   defaultValue: "Voyage",
+  // },
+  // options:{
+  //   type: 'checkbox',
+  //   label: 'options',
+  //   labelPosition: 'left',
+  //   labels: ['travel','real estate', 'automotive'],
+  //   validator: Validators.noValidation,
+  //   component: MultipleRFNB,
+  //   defaultValue: true,
+  // },
 })
 
 class LoginForm extends Component {

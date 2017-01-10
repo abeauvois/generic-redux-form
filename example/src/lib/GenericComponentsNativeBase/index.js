@@ -1,6 +1,7 @@
-import { Multiple, GenericSlider, GenericToggle, CheckBoxRFNB, SwitchRFNB, RadioRFNB } from './GenericComponents.js'
+import { Multiple, GenericSlider, GenericToggle, MakeMultiple,
+  WrappedCheckbox, WrappedSwitch, WrappedRadio, MakeMultipleRFNB } from './GenericComponents.js'
 
 export {
-  Multiple, GenericSlider, GenericToggle,
-  CheckBoxRFNB, SwitchRFNB, RadioRFNB
+  GenericSlider, GenericToggle, MakeMultiple,
+  WrappedCheckbox, WrappedSwitch, WrappedRadio, MakeMultipleRFNB
 }
