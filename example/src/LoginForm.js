@@ -15,7 +15,7 @@ import MenuItem from 'material-ui/MenuItem'
 // GENERIC REDUX FORM
 import { GenericFormFields, GenericForm, gReduxForm, Validators } from 'generic-redux-form'
 import { Multiple, GenericSlider, GenericToggle, MakeMultiple,
-  WrappedCheckbox, WrappedSwitch, WrappedRadio, MakeMultipleRFNB } from 'generic-redux-form/GenericComponentsNativeBase'
+    SwitchRFNB, RadioRFNB, CheckboxRFNB, MakeMultipleRFNB } from 'generic-redux-form/GenericComponentsNativeBase'
 
 const CardHeader = (props) => {
   return (
@@ -54,14 +54,14 @@ const genericFormFields = new GenericFormFields('login', {
   //   placeholder: 'PASSWORD',
   //   defaultValue: '',
   // },
-  sex:{
+  gender:{
     type: 'radio',
-    label: 'sex',
+    label: 'gender',
     labelPosition: 'right',
-    labels: ['Male','Female'],
+    labels: ['A','B', 'C', 'D'],
     validator: Validators.noValidation,
-    component: MakeMultiple(List, WrappedRadio),
-    defaultValue: [true, false],
+    component: MakeMultiple(List, SwitchRFNB),
+    defaultValue: [true, false, true, false],
   },
   // criterions:{
   //   type: 'slider',

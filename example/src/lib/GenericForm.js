@@ -49,11 +49,7 @@ class GenericForm extends Component {
             const config = genericFormFields.fieldsList[k]
             const {type, label, labels, labelPosition, component, description, placeholder, defaultValue,
             limits, onChange, validator, touched, error, ref, withRef} = config
-
-            // if (isMultiple(labels) ) {
-            //   TheComponent = labels.map(label => )
-            // }
-            // debugger
+            const TheComponent = component(config)
             switch (type) {
               // case 'image':
               //   return renderFormImage(k)
@@ -63,11 +59,14 @@ class GenericForm extends Component {
               case 'checkbox':
               case 'toggle':
               case 'radio':
-                debugger
-                  return <Field key={k} name={label} component={component(config)} value={defaultValue} ref={ref} withRef={withRef}/>
+                // debugger
+                  return <TheComponent key={k} {...config}/>
               case 'dropdown':
                 return (
-                  <Field key={k} name={label} component={component}
+                  <Field
+                    key={k}
+                    name={label}
+                    component={component}
                     value={defaultValue}
                     validate={validator}
                     hintText={label}

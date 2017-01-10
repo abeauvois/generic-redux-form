@@ -8,23 +8,6 @@ import { List, ListItem, Avatar, Switch, CheckBox, Row, Text, Radio } from 'nati
 // import {List, ListItem} from 'material-ui/List'
 // import {Slider, Toggle} from 'redux-form-material-ui'
 
-// WRAPPING Native-Base-Web component for better layout and event handling
-const WrappedCheckbox = (props) =>
-  <ListItem onClick={props.onChange} >
-    <Text>{props.label}</Text>
-    <CheckBox checked={props.checked}/>
-  </ListItem>
-const WrappedSwitch = (props) =>
-  <Row>
-    <Text>{props.label}</Text>
-    <Switch value={props.value} onValueChange={props.onValueChange}/>
-  </Row>
-const WrappedRadio = (props) =>
-  <ListItem onClick={props.onChange} >
-    <Radio selected={props.value}/>
-    <Text>{props.label}</Text>
-  </ListItem>
-
 function MakeMultiple(ListWrapper, WrappedComponent){
   return function createMultiple(config) {
     const isMultiple = l => l && l.length && (l.length > 0)
@@ -32,25 +15,89 @@ function MakeMultiple(ListWrapper, WrappedComponent){
       constructor(props){
         super(props)
         this.state = {
-          ...config.defaultValue
+          values: this.initState(props.labels, props.defaultValue)
         }
         this.onChange = this .onChange.bind(this)
       }
-      onChange(value){
-        this.setState({value})
+      // componentDidMount(){
+      //   // this.initState(config.labels, config.defaultValue)
+      // }
+      // componentWillUpdate(nextProps, nextState){
+      // }
+      initState(labels, initialValues){
+        const initialState = {}
+        labels.forEach((label, index) => initialState[labels[index]] = initialValues[index])
+        return initialState
+      }
+      radiobuttonStateBehavior(labels, lastSelectedLabel){
+        const resetedState = {}
+        labels.forEach(label => resetedState[label] = false)
+        resetedState[lastSelectedLabel] = true
+        return {...resetedState}
+      }
+      independantStateBehavior(lastSelected){
+        return {...lastSelected}
+      }
+      onChange(e){
+        let s
+        switch (config.type) {
+          case 'radio':
+            s = this.radiobuttonStateBehavior(config.labels, e.name)
+            break
+          default:
+            s = this.independantStateBehavior({[e.name]:e.value})
+        }
+        this.setState({values: s})//.then(console.log)
       }
       render(){
-        const { label, labels } = config
+        const { label, labels, defaultValue } = config
+        const componentDefaultValue = label => defaultValue.find((dv, i) => labels[i] === label )
         if (isMultiple(labels)){
+          // debugger
           return (
             <ListWrapper>
               {
-                labels.map(label => <WrappedComponent key={label} label={label} wrappedValue={this.state[label]} onWrappedChange={this.onChange}/>)
+                labels.map(label => {
+                  return (
+                    <WrappedComponent
+                      key={label}
+                      name={label}
+                      onComponentChange={this.onChange} // Available for createComponent() later..
+                      defaultValue={componentDefaultValue(label)} // value prop for WrappedComponent, not for Field
+                      value={this.state.values[label]}
+                    />
+                  )}
+                )
               }
             </ListWrapper>
           )
+          // return (
+          //   <ListWrapper>
+          //     {
+          //       labels.map(label =>
+          //         <Field
+          //           key={label}
+          //           name={label}
+          //           component={WrappedComponent}
+          //           onComponentChange={this.onChange} // Available for createComponent() later..
+          //           defaultValue={componentDefaultValue(label)} // value prop for WrappedComponent, not for Field
+          //           newVal={this.state.values[label]}
+          //         />
+          //       )
+          //     }
+          //   </ListWrapper>
+          // )
         } else {
-          return <WrappedComponent key={label} label={label} wrappedValue={this.state[label]} onWrappedChange={this.onChange}/>
+          return (
+            <Field
+              key={label}
+              name={label}
+              component={WrappedComponent}
+              onComponentChange={this.onChange}
+              defaultValue={componentDefaultValue(label)} // value prop for WrappedComponent, not for Field
+              value={this.state.values[label]}
+            />
+          )
         }
       }
     }
@@ -184,9 +231,27 @@ function MakeMultiple(ListWrapper, WrappedComponent){
     return InputComponent
   }
 
-  const CheckBoxRFNB = createComponent(
+  // WRAPPING Native-Base-Web component for better layout and event handling
+  const WrappedCheckbox = (props) =>
+    <ListItem onClick={props.onChange} >
+      <Text>{props.label}</Text>
+      <CheckBox checked={props.checked}/>
+    </ListItem>
+  const WrappedSwitch = (props) =>
+    <Row>
+      <Text>{props.label}</Text>
+      <Switch value={props.value} onValueChange={props.onValueChange}/>
+    </Row>
+  const WrappedRadio = (props) =>
+    <ListItem onClick={props.onChange} >
+      <Radio selected={props.value}/>
+      <Text>{props.label}</Text>
+    </ListItem>
+  const CheckboxRFNB = createComponent(
     WrappedCheckbox,
     ({
+      onComponentChange, // Coming from <Field onComponentChange={}/>
+
       input: {
         onChange,
         value,
@@ -199,25 +264,44 @@ function MakeMultiple(ListWrapper, WrappedComponent){
       ...props,
       checked: !!value ? true : false,
       // onClick ? OnChange ? onPress ?
-      onChange: () => onChange(!value)
+      onClick: (e) => onComponentChange && onComponentChange(!value) || onChange(!value)
     })
   )
   const SwitchRFNB = createComponent(
     WrappedSwitch,
+    // (RF) => {debugger},
     ({
-      input: {
-        onChange,
-        value,
-        ...inputProps
-      },
-      meta,
+      onComponentChange, // Coming from <WrappedComponent onComponentChange={}/>
+      defaultValue,
+      name,
+      value,
+      // input: {
+      //   onChange,
+      //   value,
+      //   name,
+      //   ...inputProps
+      // },
+      // meta,
       ...props
     }) => ({
-      ...inputProps,
+      // ...inputProps,
       ...props,
-      value: !!value ? true : false,
-      // onClick ? OnChange ? onPress ?
-      onValueChange: () => onChange(!value)
+      value: value,
+      onValueChange: () => {
+        const result = {name, value: !value}
+        onComponentChange && onComponentChange(result)
+        // onChange(result.value)
+        // debugger
+        // onChange(newVal)
+        // console.log('onComponentChange result', componentState)
+        // const currentValue = componentState && componentState.values && componentState.values[name] || defaultValue
+        // if (currentValue !== result.value){
+        //   Object.keys(componentState.values).forEach(k => {
+        //     const newValue = componentState.values[k]
+            // onChange(result.value) // Only boolean for WrappedSwitch
+        //   })
+        // }
+      }
     })
   )
   const RadioRFNB = createComponent(
@@ -235,7 +319,7 @@ function MakeMultiple(ListWrapper, WrappedComponent){
       ...props,
       value: !!value ? true : false,
       // onClick ? OnChange ? onPress ?
-      onChange: () => onChange(!value)
+      onClick: (e) => onChange(!value)
     })
   )
 
@@ -309,5 +393,5 @@ const GenericToggle = (props) => {
 
 export {
   GenericSlider, GenericToggle, MakeMultiple,
-  WrappedCheckbox, WrappedSwitch, WrappedRadio, MakeMultipleRFNB
+  SwitchRFNB, RadioRFNB, CheckboxRFNB, MakeMultipleRFNB
 }
