@@ -59,7 +59,8 @@ class GenericForm extends Component {
               case 'checkbox':
               case 'toggle':
               case 'radio':
-                const TheComponent = isMultiple(labels) ? component(config) : component
+                const TheComponent = component(config)
+                // const TheComponent = isMultiple(labels) ? component(config) : component
                 // debugger
                   return <TheComponent key={k} {...config}/>
               case 'dropdown':

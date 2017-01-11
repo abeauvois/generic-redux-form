@@ -55,23 +55,28 @@ function MakeMultiple(ListWrapper, WrappedComponent){
         labels.forEach((label, index) => initialState[labels[index]] = initialValues[index])
         return initialState
       }
-      radiobuttonStateBehavior(labels, lastSelectedLabel){
+      radiobuttonStateBehavior(config, lastSelected){
+        const { label, labels } = config
         const resetedState = {}
-        labels.forEach(label => resetedState[label] = false)
-        resetedState[lastSelectedLabel] = true
+        if (!labels){
+          resetedState[lastSelected.name] = lastSelected.value
+        } else {
+          labels.forEach(label => resetedState[label] = false)
+          resetedState[lastSelected.name] = true
+        }
         return {...resetedState}
       }
       independantStateBehavior(lastSelected){
         return {...lastSelected}
       }
-      onChange(e){
+      onChange(lastSelected){
         let s
         switch (config.type) {
           case 'radio':
-            s = this.radiobuttonStateBehavior(config.labels, e.name)
+            s = this.radiobuttonStateBehavior(config, lastSelected)
             break
           default:
-            s = this.independantStateBehavior({[e.name]:e.value})
+            s = this.independantStateBehavior({[lastSelected.name]: lastSelected.value})
         }
         this.setState({values: s})//.then(console.log)
       }
@@ -103,9 +108,8 @@ function MakeMultiple(ListWrapper, WrappedComponent){
             />
           )
         } else {
-          debugger
           return (
-            <Field
+            <WrappedComponent
               key={label}
               name={label}
               component={WrappedComponent}

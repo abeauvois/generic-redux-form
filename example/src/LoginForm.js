@@ -71,14 +71,14 @@ const genericFormFields = new GenericFormFields('login', {
   //   limits: {min: 0, max: 50, step: 1},
   //   defaultValue: 0,
   // },
-  // published:{
-  //   type: 'radio',
-  //   label: 'Published',
-  //   labelPosition: 'right',
-  //   validator: Validators.noValidation,
-  //   component: MakeMultipleRFNB(MakeMultiple(SwitchRFNB)),
-  //   defaultValue: false,
-  // },
+  published:{
+    type: 'radio',
+    label: 'Published',
+    labelPosition: 'right',
+    validator: Validators.noValidation,
+    component: (MakeMultiple(List, SwitchMultiple)),
+    defaultValue: false,
+  },
   // settings:{
   //   type: 'toggle',
   //   label: 'settings',
