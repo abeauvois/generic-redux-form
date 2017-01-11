@@ -33,6 +33,26 @@ const Multiply = (props) => {
     </ListWrapper>
   )}
 
+// const MultiplyRF = (props) => {
+//   const {labels, onChange, defaultValue, values, ListWrapper, WrappedComponent} = props
+//   return (
+//     <ListWrapper>
+//       {
+//         labels.map(label => {
+//           return (
+//             <Field
+//               key={label}
+//               name={label}
+//               onComponentChange={onChange} // Available for createComponent() later..
+//               defaultValue={getDefaultValue(labels, label, defaultValue)} // value prop for WrappedComponent, not for Field
+//               value={values[label]}
+//             />
+//           )}
+//         )
+//       }
+//     </ListWrapper>
+//   )}
+
 function MakeMultiple(ListWrapper, WrappedComponent){
   return function createMultiple(config) {
     const isMultiple = l => l && l.length && (l.length > 0)
@@ -79,6 +99,7 @@ function MakeMultiple(ListWrapper, WrappedComponent){
             s = this.independantStateBehavior({[lastSelected.name]: lastSelected.value})
         }
         this.setState({values: s})//.then(console.log)
+        if (this.props.onChange) this.props.onChange(s)
       }
       render(){
         const { label, labels, defaultValue } = config
@@ -159,6 +180,7 @@ function MakeMultiple(ListWrapper, WrappedComponent){
       <Radio selected={props.value}/>
       <Text>{props.label}</Text>
     </ListItem>
+
   const CheckboxRFNB = createComponent(
     WrappedCheckbox,
     ({
@@ -213,6 +235,25 @@ function MakeMultiple(ListWrapper, WrappedComponent){
       }
     })
   )
+  const RadioRFNB = createComponent(
+    WrappedRadio,
+    ({ // from Redux-Form component
+      input: {
+        onChange,
+        value,
+        ...inputProps
+      },
+      meta,
+      ...props
+    }) => ({ // to Native-Base-Web component
+      ...inputProps,
+      ...props,
+      value: !!value ? true : false,
+      // onClick ? OnChange ? onPress ?
+      onClick: (e) => onChange(!value)
+    })
+  )
+
   const SwitchMultiple = createComponent( // TODO: rename it SwitchMultiple
     WrappedSwitch,
     // (RF) => {debugger},
@@ -250,54 +291,30 @@ function MakeMultiple(ListWrapper, WrappedComponent){
       }
     })
   )
-  const RadioRFNB = createComponent(
-    WrappedRadio,
-    ({ // from Redux-Form component
-      input: {
-        onChange,
-        value,
-        ...inputProps
-      },
-      meta,
-      ...props
-    }) => ({ // to Native-Base-Web component
-      ...inputProps,
-      ...props,
-      value: !!value ? true : false,
-      // onClick ? OnChange ? onPress ?
-      onClick: (e) => onChange(!value)
-    })
-  )
 
   // const MakeMultipleRFNB = Multiple => {debugger}
-  function MakeMultipleRFNB(Multiple) {
+  function MakeMultipleRFNB(ListWrapper, WrappedComponent) {
     return function createMultipleRFNB(config) {
-      const M = Multiple(config)
+      const M = MakeMultiple(ListWrapper, WrappedComponent)(config)
       return createComponent(
         M,
-        (RF) => { debugger },
+        // (RF) => { debugger },
         ({ // from Redux-Form component
-          // WrappedComponent={WrappedComponent}
-          // name={label}
-          // labels={labels}
-          // ListWrapper={ListWrapper}
-          // onChange={this.onChange} // Available for createComponent() later..
-          // defaultValue={defaultValue} // value prop for WrappedComponent, not for Field
-          // values={this.state.values}
-
-          // input: {
-          //   onChange,
-          //   value,
-          //   ...inputProps
-          // },
-          // meta,
+          input: {
+            onChange,
+            value,
+            ...inputProps
+          },
+          meta,
           ...props
         }) => ({ // to Native-Base-Web component
-          // ...inputProps,
+          ...inputProps,
           ...props,
           value: value,
-          // onClick ? OnChange ? onPress ?
-          onChange: (e) => onChange(value) //onChange(onWrappedChange(value))
+          onChange: (e) => {
+
+            onChange(e[name]) // Call ReduxForm onChange()
+          }//onChange(onWrappedChange(value))
         })
     )
   }
@@ -310,7 +327,6 @@ function MakeMultiple(ListWrapper, WrappedComponent){
  */
 
 const DEFAULT_LISTITEM_WIDTH = 220
-
 
 const GenericSlider = (props) => {
   return (

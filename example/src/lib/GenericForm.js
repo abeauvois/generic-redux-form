@@ -2,7 +2,7 @@
 import injectTouchTapEvent from 'react-tap-event-plugin'
 injectTouchTapEvent() // Necessary for material-ui lib
 import React, { Component, PropTypes } from 'react'
-import { Field, reduxForm } from 'redux-form'
+import { Field, Form, reduxForm } from 'redux-form'
 
 class GenericForm extends Component {
   static contextTypes = {
@@ -42,12 +42,12 @@ class GenericForm extends Component {
     const FormButtons = genericFormFields.fieldsList['FormButtons'] && genericFormFields.fieldsList['FormButtons'].component
 
     return (
-      <form onSubmit={handleSubmit(this.submit)}>
+      <Form onSubmit={handleSubmit(this.submit)}>
         {
           names.map(k => {
             const isMultiple = l => l && l.length && (l.length > 0) // OR component.name === 'createMultiple'
             const config = genericFormFields.fieldsList[k]
-            const {type, label, labels, labelPosition, component, description, placeholder, defaultValue,
+            const {type, label, labels, inputs, labelPosition, component, description, placeholder, defaultValue,
             limits, onChange, validator, touched, error, ref, withRef} = config
             // debugger
             switch (type) {
@@ -59,10 +59,28 @@ class GenericForm extends Component {
               case 'checkbox':
               case 'toggle':
               case 'radio':
-                const TheComponent = component(config)
-                // const TheComponent = isMultiple(labels) ? component(config) : component
-                // debugger
-                  return <TheComponent key={k} {...config}/>
+                return (
+                  <Field key={k} name={label}
+                    component={component(config)}
+                  />
+                )
+              case 'section':
+                return (
+                  <FormSection key={k} name={label}>
+                    {
+                      labels.map(label => {
+                        return (
+                          <Field
+                            key={label}
+                            name={label}
+                            component={component}
+                            onComponentChange={onChange} // Available for createComponent() later..
+                          />
+                        )}
+                      )
+                    }
+                  </FormSection>
+                )
               case 'dropdown':
                 return (
                   <Field
@@ -73,8 +91,8 @@ class GenericForm extends Component {
                     validate={validator}
                     hintText={label}
                     floatingLabelText={label}
-                    ref={ref} withRef={withRef}>
-                  </Field>
+                    ref={ref} withRef={withRef}
+                  />
                 )
               default:
                 if ((k === 'FormButtons') || (k === 'Multiple')) return null
@@ -91,7 +109,7 @@ class GenericForm extends Component {
           <FormButtons primary type="submit" label="Submit" disabled={submitting} />
           <FormButtons secondary label="Cancel" disabled={pristine || submitting} onClick={this.reset}/>
         </div>
-      </form>
+      </Form>
     )
   }
 }

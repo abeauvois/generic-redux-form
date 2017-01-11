@@ -57,10 +57,10 @@ const genericFormFields = new GenericFormFields('login', {
     type: 'radio',
     label: 'gender',
     labelPosition: 'right',
-    labels: ['A','B', 'C', 'D'],
+    labels: ['A','B', 'C'],
     validator: Validators.noValidation,
-    component: (MakeMultiple(List, SwitchMultiple)), // TODO: WrappedSwitch
-    defaultValue: [true, false, true, false], // TODO: Should take only last as active with radiobuttonStateBehavior()
+    component: MakeMultiple(List, SwitchMultiple), // TODO: WrappedSwitch
+    defaultValue: [false, false, true], // TODO: Should take only last as active with radiobuttonStateBehavior()
   },
   // criterions:{
   //   type: 'slider',
@@ -71,14 +71,28 @@ const genericFormFields = new GenericFormFields('login', {
   //   limits: {min: 0, max: 50, step: 1},
   //   defaultValue: 0,
   // },
-  published:{
-    type: 'radio',
-    label: 'Published',
-    labelPosition: 'right',
-    validator: Validators.noValidation,
-    component: (MakeMultiple(List, SwitchMultiple)),
-    defaultValue: false,
-  },
+  // aSection: {
+  //   type: 'section',
+  //   label: 'aSection',
+  //   inputs: {
+  //     published:{
+  //       type: 'radio',
+  //       label: 'published',
+  //       labelPosition: 'right',
+  //       validator: Validators.noValidation,
+  //       component: SwitchRFNB,
+  //       defaultValue: false,
+  //     },
+  //     sent:{
+  //       type: 'radio',
+  //       label: 'sent',
+  //       labelPosition: 'right',
+  //       validator: Validators.noValidation,
+  //       component: SwitchRFNB,
+  //       defaultValue: true,
+  //     },
+  //   }
+  // }
   // settings:{
   //   type: 'toggle',
   //   label: 'settings',
