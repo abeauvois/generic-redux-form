@@ -45,11 +45,11 @@ class GenericForm extends Component {
       <form onSubmit={handleSubmit(this.submit)}>
         {
           names.map(k => {
-            const isMultiple = l => l && l.length && (l.length > 0)
+            const isMultiple = l => l && l.length && (l.length > 0) // OR component.name === 'createMultiple'
             const config = genericFormFields.fieldsList[k]
             const {type, label, labels, labelPosition, component, description, placeholder, defaultValue,
             limits, onChange, validator, touched, error, ref, withRef} = config
-            const TheComponent = component(config)
+            // debugger
             switch (type) {
               // case 'image':
               //   return renderFormImage(k)
@@ -59,6 +59,7 @@ class GenericForm extends Component {
               case 'checkbox':
               case 'toggle':
               case 'radio':
+                const TheComponent = isMultiple(labels) ? component(config) : component
                 // debugger
                   return <TheComponent key={k} {...config}/>
               case 'dropdown':

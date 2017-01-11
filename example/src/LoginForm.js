@@ -15,6 +15,7 @@ import MenuItem from 'material-ui/MenuItem'
 // GENERIC REDUX FORM
 import { GenericFormFields, GenericForm, gReduxForm, Validators } from 'generic-redux-form'
 import { Multiple, GenericSlider, GenericToggle, MakeMultiple,
+    SwitchMultiple,
     SwitchRFNB, RadioRFNB, CheckboxRFNB, MakeMultipleRFNB } from 'generic-redux-form/GenericComponentsNativeBase'
 
 const CardHeader = (props) => {
@@ -35,9 +36,7 @@ const genericFormFields = new GenericFormFields('login', {
   FormButtons:{
     component: (props) => <Button>{props.label}</Button>,
   },
-  // Multiple:{
-  //   component: (props) => <MultipleRFNB>{props.children}</MultipleRFNB>,
-  // },
+
   // email:{
   //   label: 'email',
   //   validator: [Validators.email,Validators.required],
@@ -60,8 +59,8 @@ const genericFormFields = new GenericFormFields('login', {
     labelPosition: 'right',
     labels: ['A','B', 'C', 'D'],
     validator: Validators.noValidation,
-    component: MakeMultiple(List, SwitchRFNB),
-    defaultValue: [true, false, true, false],
+    component: (MakeMultiple(List, SwitchMultiple)), // TODO: WrappedSwitch
+    defaultValue: [true, false, true, false], // TODO: Should take only last as active with radiobuttonStateBehavior()
   },
   // criterions:{
   //   type: 'slider',
@@ -73,11 +72,11 @@ const genericFormFields = new GenericFormFields('login', {
   //   defaultValue: 0,
   // },
   // published:{
-  //   type: 'toggle',
+  //   type: 'radio',
   //   label: 'Published',
   //   labelPosition: 'right',
   //   validator: Validators.noValidation,
-  //   component: Toggle,
+  //   component: MakeMultipleRFNB(MakeMultiple(SwitchRFNB)),
   //   defaultValue: false,
   // },
   // settings:{
