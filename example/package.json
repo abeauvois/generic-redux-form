@@ -11,8 +11,10 @@
   "dependencies": {
     "generic-redux-form": "file:../",
     "material-ui": "^0.16.6",
+    "native-base-web": "^0.0.4",
     "react": "^15.4.1",
     "react-dom": "^15.4.1",
+    "react-dropzone": "^3.9.0",
     "react-native-web-extended": "^0.0.7",
     "react-redux": "^5.0.1",
     "react-tap-event-plugin": "^2.0.1",

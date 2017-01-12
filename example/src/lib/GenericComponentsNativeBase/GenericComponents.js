@@ -2,6 +2,7 @@
 import React, { Component, createElement } from 'react'
 import { View } from 'react-native'
 import { Field } from 'redux-form'
+import Dropzone from 'react-dropzone'
 
 // UI VENDORS
 import { List, ListItem, Avatar, Switch, CheckBox,
@@ -190,6 +191,10 @@ const WrappedTextinput = (props) =>
   </InputGroup>
 const WrappedButton = (props) =>
   <Button onClick={props.onclick}>{props.label}</Button>
+const WrappedFileinput = (props) =>
+  <Dropzone onDrop={props.onDrop}>
+    <Text>Try dropping files here, or click to select'em.</Text>
+  </Dropzone>
 
 function mapRFtoNB(Component){ // map ReduxForm to NativeBase props
   return createComponent(
@@ -230,10 +235,12 @@ function mapRFtoNB(Component){ // map ReduxForm to NativeBase props
 }
 
 const CheckboxRFNB = mapRFtoNB(WrappedCheckbox)
+const PickerRFNB = mapRFtoNB(WrappedPicker)
 const SwitchRFNB = mapRFtoNB(WrappedSwitch)
 const RadioRFNB = mapRFtoNB(WrappedRadio)
 const TextinputRFNB = mapRFtoNB(WrappedTextinput)
 const ButtonRFNB = mapRFtoNB(WrappedButton)
+const FileinputRFNB = mapRFtoNB(WrappedFileinput)
 
 function toMultiple(Component){
   return createComponent(
@@ -252,6 +259,10 @@ function toMultiple(Component){
       checked: !!value ? true : false,
       value: !!value ? true : false,
       selected: !!value ? true : false,
+      onDrop: (files) => {
+        console.log('files uploaded', files)
+        onChange(files.join(','))
+      },
       onChange: (e) => {
         let result
         // if (value === '') {
@@ -355,6 +366,6 @@ const GenericToggle = (props) => {
 
 export {
   GenericSlider, GenericToggle, MakeMultiple,
-  TextinputRFNB, ButtonRFNB,
+  TextinputRFNB, ButtonRFNB, PickerRFNB, FileinputRFNB,
   SwitchRFNB, RadioRFNB, CheckboxRFNB, MakeMultipleRFNB
 }

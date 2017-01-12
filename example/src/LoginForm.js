@@ -65,6 +65,15 @@ const genericFormFields = new GenericFormFields('login', {
   //   limits: {min: 0, max: 50, step: 1},
   //   defaultValue: 0,
   // },
+  upload:{
+    type: 'textinput',
+    label: 'upload',
+    labelPosition: 'right',
+    validator: Validators.noValidation,
+    component: Gen.FileinputRFNB,
+    placeholder: 'your name',
+    defaultValue: '',
+  },
   username:{
     type: 'textinput',
     label: 'username',
