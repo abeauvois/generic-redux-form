@@ -53,7 +53,15 @@ class GenericFormFields {
   getDefaultValues(){
     let formDefaultValues = {}
     this.fieldsListKeys.forEach(k => {
-      formDefaultValues[k] = this.fieldsList[k].defaultValue
+      const fieldConfig = this.fieldsList[k]
+      if (!fieldConfig.defaultValue && fieldConfig.type ==='section') {
+        const defaultValues = []
+        const inputsKeys = Object.keys(fieldConfig.inputs)
+        inputsKeys.forEach(input => defaultValues.push(fieldConfig.inputs[input].defaultValue))
+        formDefaultValues[k] = defaultValues
+      } else {
+        formDefaultValues[k] = fieldConfig.defaultValue
+      }
     })
     return formDefaultValues
   }

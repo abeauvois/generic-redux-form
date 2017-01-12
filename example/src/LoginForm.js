@@ -33,10 +33,6 @@ const RadioButtonGroup = View
 const TextField = Input // TODO: InputGroup
 
 const genericFormFields = new GenericFormFields('login', {
-  FormButtons:{
-    component: (props) => <Button>{props.label}</Button>,
-  },
-
   // email:{
   //   label: 'email',
   //   validator: [Validators.email,Validators.required],
@@ -53,15 +49,15 @@ const genericFormFields = new GenericFormFields('login', {
   //   placeholder: 'PASSWORD',
   //   defaultValue: '',
   // },
-  gender:{
-    type: 'radio',
-    label: 'gender',
-    labelPosition: 'right',
-    labels: ['A','B', 'C'],
-    validator: Validators.noValidation,
-    component: MakeMultiple(List, SwitchMultiple), // TODO: WrappedSwitch
-    defaultValue: [false, false, true], // TODO: Should take only last as active with radiobuttonStateBehavior()
-  },
+  // gender:{
+  //   type: 'radio',
+  //   label: 'gender',
+  //   labelPosition: 'right',
+  //   labels: ['A','B', 'C'],
+  //   validator: Validators.noValidation,
+  //   component: MakeMultiple(List, SwitchMultiple), // TODO: WrappedSwitch
+  //   defaultValue: [false, false, true], // TODO: Should take only last as active with radiobuttonStateBehavior()
+  // },
   // criterions:{
   //   type: 'slider',
   //   label: 'criterions',
@@ -71,28 +67,72 @@ const genericFormFields = new GenericFormFields('login', {
   //   limits: {min: 0, max: 50, step: 1},
   //   defaultValue: 0,
   // },
-  // aSection: {
-  //   type: 'section',
-  //   label: 'aSection',
-  //   inputs: {
-  //     published:{
-  //       type: 'radio',
-  //       label: 'published',
-  //       labelPosition: 'right',
-  //       validator: Validators.noValidation,
-  //       component: SwitchRFNB,
-  //       defaultValue: false,
-  //     },
-  //     sent:{
-  //       type: 'radio',
-  //       label: 'sent',
-  //       labelPosition: 'right',
-  //       validator: Validators.noValidation,
-  //       component: SwitchRFNB,
-  //       defaultValue: true,
-  //     },
-  //   }
-  // }
+
+  published:{
+    type: 'switch',
+    label: 'published',
+    labelPosition: 'right',
+    validator: Validators.noValidation,
+    component: SwitchRFNB,
+    defaultValue: true,
+  },
+  sectionA: {
+    type: 'section',
+    label: 'sectionA',
+    inputs: {
+      sent:{
+        type: 'radio',
+        label: 'sent',
+        labelPosition: 'right',
+        validator: Validators.noValidation,
+        component: RadioRFNB,
+        defaultValue: false,
+      },
+      test:{
+        type: 'radio',
+        label: 'test',
+        labelPosition: 'right',
+        validator: Validators.noValidation,
+        component: RadioRFNB,
+        defaultValue: false,
+      },
+      test2:{
+        type: 'radio',
+        label: 'test2',
+        labelPosition: 'right',
+        validator: Validators.noValidation,
+        component: RadioRFNB,
+        defaultValue: false,
+      },
+    }
+  },
+  sectionB: {
+    type: 'section',
+    label: 'sectionB',
+    inputs: {
+      check1:{
+        type: 'checkbox',
+        label: 'check1',
+        labelPosition: 'right',
+        validator: Validators.noValidation,
+        component: CheckboxRFNB,
+        defaultValue: true,
+      },
+      check2:{
+        type: 'checkbox',
+        label: 'check2',
+        labelPosition: 'right',
+        validator: Validators.noValidation,
+        component: CheckboxRFNB,
+        defaultValue: false,
+      }
+    },
+  },
+  validCancel:{
+    type: 'FormButtons',
+    label: 'validCancel',
+    component: (props) => <Button>{props.label}</Button>,
+  }
   // settings:{
   //   type: 'toggle',
   //   label: 'settings',

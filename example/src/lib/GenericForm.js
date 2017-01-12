@@ -2,7 +2,8 @@
 import injectTouchTapEvent from 'react-tap-event-plugin'
 injectTouchTapEvent() // Necessary for material-ui lib
 import React, { Component, PropTypes } from 'react'
-import { Field, Form, reduxForm } from 'redux-form'
+import { View } from 'react-native'
+import { Field, Form, FormSection, reduxForm } from 'redux-form'
 
 class GenericForm extends Component {
   static contextTypes = {
@@ -49,66 +50,73 @@ class GenericForm extends Component {
             const config = genericFormFields.fieldsList[k]
             const {type, label, labels, inputs, labelPosition, component, description, placeholder, defaultValue,
             limits, onChange, validator, touched, error, ref, withRef} = config
-            // debugger
+
             switch (type) {
               // case 'image':
               //   return renderFormImage(k)
               // case 'avatar':
               //   return this.renderFormAvatar(k)
-              case 'slider':
-              case 'checkbox':
-              case 'toggle':
-              case 'radio':
-                return (
-                  <Field key={k} name={label}
-                    component={component(config)}
-                  />
-                )
+              // case 'slider':
+              // case 'checkbox':
+              // case 'toggle':
+              // case 'radio':
+              //   return (
+              //     <Field key={k} name={label}
+              //       component={component(config)}
+              //     />
+              //   )
               case 'section':
+                const inputsLabels = Object.keys(inputs)
                 return (
                   <FormSection key={k} name={label}>
                     {
-                      labels.map(label => {
+                      inputsLabels.map(inputLabel => {
                         return (
                           <Field
-                            key={label}
-                            name={label}
-                            component={component}
-                            onComponentChange={onChange} // Available for createComponent() later..
+                            key={inputLabel}
+                            name={inputLabel}
+                            component={inputs[inputLabel].component}
+                            inputType={inputs[inputLabel].component}
+                            defaultValue={inputs[inputLabel].defaultValue}
                           />
                         )}
                       )
                     }
                   </FormSection>
                 )
-              case 'dropdown':
+                // case 'dropdown':
+                //   return (
+                //     <Field
+                //       key={k}
+                //       name={label}
+                //       component={component}
+                //       value={defaultValue}
+                //       validate={validator}
+                //       hintText={label}
+                //       floatingLabelText={label}
+                //       ref={ref} withRef={withRef}
+                //     />
+                //   )
+              case 'FormButtons':
+                return (
+                  <View key="FormButtons">
+                    {/* <FormButtons primary type="submit" label="Submit" disabled={submitting} /> */}
+                    {/* <FormButtons secondary label="Cancel" disabled={pristine || submitting} onClick={this.reset}/> */}
+                  </View>
+                )
+              default:
                 return (
                   <Field
                     key={k}
                     name={label}
                     component={component}
-                    value={defaultValue}
-                    validate={validator}
-                    hintText={label}
-                    floatingLabelText={label}
-                    ref={ref} withRef={withRef}
-                  />
-                )
-              default:
-                if ((k === 'FormButtons') || (k === 'Multiple')) return null
-                return (
-                  <Field key={k} name={label} component={component}
-                    validate={validator}
-                    hintText={placeholder}
-                    floatingLabelText={label}
+                    defaultValue={defaultValue}
+                    inputType={type}
                     ref={ref} withRef={withRef}/>
                 )}
           })
         }
-        <div>
-          <FormButtons primary type="submit" label="Submit" disabled={submitting} />
-          <FormButtons secondary label="Cancel" disabled={pristine || submitting} onClick={this.reset}/>
-        </div>
+
       </Form>
     )
   }
