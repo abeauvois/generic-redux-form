@@ -71,6 +71,7 @@ const genericFormFields = new GenericFormFields('login', {
     labelPosition: 'right',
     validator: Validators.noValidation,
     component: Gen.TextinputRFNB,
+    placeholder: 'your name',
     defaultValue: '',
   },
   check1:{

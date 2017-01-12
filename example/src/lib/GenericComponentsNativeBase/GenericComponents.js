@@ -164,7 +164,7 @@ const WrappedRadio = (props) =>
 const WrappedTextinput = (props) =>
   <InputGroup>
     <Icon name='ios-home' style={{color:'#384850'}}/>
-    <Input onChangeText={props.onChange}/>
+    <Input onChangeText={props.onChange} placeholder={props.placeholder}/>
   </InputGroup>
 
 function mapNBtoRF(Component){ // map NativeBase props to ReduxForm
@@ -193,7 +193,7 @@ function mapNBtoRF(Component){ // map NativeBase props to ReduxForm
         let result
         if (inputType === 'textinput') {
           result = newValue
-        }else { // checkbox, switch, section, radio
+        } else { // inputType: checkbox, switch, radio
           result = !value
         }
         // let valueVariable = (inputType === 'checked') ? 'checked' : (inputType === 'radio') ? 'selected' : 'value'

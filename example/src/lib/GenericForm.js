@@ -77,6 +77,7 @@ class GenericForm extends Component {
                             name={inputLabel}
                             component={inputs[inputLabel].component}
                             inputType={inputs[inputLabel].component}
+                            placeholder={inputs[inputLabel].placeholder}
                             defaultValue={inputs[inputLabel].defaultValue}
                           />
                         )}
@@ -111,6 +112,7 @@ class GenericForm extends Component {
                     name={label}
                     component={component}
                     defaultValue={defaultValue}
+                    placeholder={placeholder}
                     inputType={type}
                     ref={ref} withRef={withRef}/>
                 )}
