@@ -1,5 +1,6 @@
 
 import React, { Component, createElement } from 'react'
+import { View } from 'react-native'
 import { Field } from 'redux-form'
 
 // UI VENDORS
@@ -8,6 +9,7 @@ import { List, ListItem, Avatar, Switch, CheckBox,
 // import Avatar from 'material-ui/Avatar'
 // import {List, ListItem} from 'material-ui/List'
 // import {Slider, Toggle} from 'redux-form-material-ui'
+import { OSTheme } from 'native-base'
 
 const getDefaultValue = (labels, label, defaultValues) => {
   if (!labels) return defaultValues // Case of not Multiple
@@ -146,28 +148,50 @@ function createComponent(NativeBaseComponent, mapProps) {
 }
 
 // WRAPPING Native-Base-Web component for better layout and event handling
+// TODO: Create a class component based on NativeBaseComponent
+// for getting access to Theme via this.getTheme()
 const WrappedCheckbox = (props) =>
   <ListItem onClick={props.onChange} >
     <Text>{props.label}</Text>
     <CheckBox checked={props.checked}/>
   </ListItem>
+const WrappedPicker = (props) =>
+  <Picker
+    selectedValue={value}
+    onValueChange={(itemValue) => onChange(itemValue)}
+    {...props}>
+  </Picker>
 const WrappedSwitch = (props) =>
-  <Row>
+  <View style={{
+    borderBottomWidth: 1,
+    marginLeft: 15,
+    padding: 10,
+    paddingLeft: 2,
+    justifyContent: 'space-between', //: 'flex-start',
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderColor: '#ddd'
+
+  }}>
     <Text>{props.label}</Text>
     <Switch value={props.value} onValueChange={props.onChange}/>
-  </Row>
+  </View>
 const WrappedRadio = (props) =>
   <ListItem onClick={props.onChange} >
     <Radio selected={props.selected}/>
     <Text>{props.label}</Text>
   </ListItem>
 const WrappedTextinput = (props) =>
-  <InputGroup>
-    <Icon name='ios-home' style={{color:'#384850'}}/>
-    <Input onChangeText={props.onChange} placeholder={props.placeholder}/>
+  <InputGroup style={{marginLeft: 15, paddingLeft: 0}}>
+    <Icon style={{padding: 0}}
+      name='ios-home'/>
+    <Input
+      onChangeText={props.onChange} placeholder={props.placeholder}/>
   </InputGroup>
+const WrappedButton = (props) =>
+  <Button onClick={props.onclick}>{props.label}</Button>
 
-function mapNBtoRF(Component){ // map NativeBase props to ReduxForm
+function mapRFtoNB(Component){ // map ReduxForm to NativeBase props
   return createComponent(
     Component,
     // (r) => {debugger},
@@ -205,10 +229,11 @@ function mapNBtoRF(Component){ // map NativeBase props to ReduxForm
   )
 }
 
-const CheckboxRFNB = mapNBtoRF(WrappedCheckbox)
-const SwitchRFNB = mapNBtoRF(WrappedSwitch)
-const RadioRFNB = mapNBtoRF(WrappedRadio)
-const TextinputRFNB = mapNBtoRF(WrappedTextinput)
+const CheckboxRFNB = mapRFtoNB(WrappedCheckbox)
+const SwitchRFNB = mapRFtoNB(WrappedSwitch)
+const RadioRFNB = mapRFtoNB(WrappedRadio)
+const TextinputRFNB = mapRFtoNB(WrappedTextinput)
+const ButtonRFNB = mapRFtoNB(WrappedButton)
 
 function toMultiple(Component){
   return createComponent(
@@ -330,6 +355,6 @@ const GenericToggle = (props) => {
 
 export {
   GenericSlider, GenericToggle, MakeMultiple,
-  TextinputRFNB,
+  TextinputRFNB, ButtonRFNB,
   SwitchRFNB, RadioRFNB, CheckboxRFNB, MakeMultipleRFNB
 }

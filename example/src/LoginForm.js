@@ -153,7 +153,7 @@ const genericFormFields = new GenericFormFields('login', {
   validCancel:{
     type: 'FormButtons',
     label: 'validCancel',
-    component: (props) => <Button>{props.label}</Button>,
+    component: Gen.Button,
   }
   // settings:{
   //   type: 'toggle',
