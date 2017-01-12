@@ -14,9 +14,7 @@ import MenuItem from 'material-ui/MenuItem'
 
 // GENERIC REDUX FORM
 import { GenericFormFields, GenericForm, gReduxForm, Validators } from 'generic-redux-form'
-import { Multiple, GenericSlider, GenericToggle, MakeMultiple,
-    SwitchMultiple,
-    SwitchRFNB, RadioRFNB, CheckboxRFNB, MakeMultipleRFNB } from 'generic-redux-form/GenericComponentsNativeBase'
+import { default as Gen } from 'generic-redux-form/GenericComponentsNativeBase'
 
 const CardHeader = (props) => {
   return (
@@ -67,13 +65,36 @@ const genericFormFields = new GenericFormFields('login', {
   //   limits: {min: 0, max: 50, step: 1},
   //   defaultValue: 0,
   // },
-
+  username:{
+    type: 'textinput',
+    label: 'username',
+    labelPosition: 'right',
+    validator: Validators.noValidation,
+    component: Gen.TextinputRFNB,
+    defaultValue: '',
+  },
+  check1:{
+    type: 'checkbox',
+    label: 'check1',
+    labelPosition: 'right',
+    validator: Validators.noValidation,
+    component: Gen.CheckboxRFNB,
+    defaultValue: true,
+  },
+  check2:{
+    type: 'checkbox',
+    label: 'check2',
+    labelPosition: 'right',
+    validator: Validators.noValidation,
+    component: Gen.CheckboxRFNB,
+    defaultValue: false,
+  },
   published:{
     type: 'switch',
     label: 'published',
     labelPosition: 'right',
     validator: Validators.noValidation,
-    component: SwitchRFNB,
+    component: Gen.SwitchRFNB,
     defaultValue: true,
   },
   sectionA: {
@@ -85,7 +106,7 @@ const genericFormFields = new GenericFormFields('login', {
         label: 'sent',
         labelPosition: 'right',
         validator: Validators.noValidation,
-        component: RadioRFNB,
+        component: Gen.RadioRFNB,
         defaultValue: false,
       },
       test:{
@@ -93,7 +114,7 @@ const genericFormFields = new GenericFormFields('login', {
         label: 'test',
         labelPosition: 'right',
         validator: Validators.noValidation,
-        component: RadioRFNB,
+        component: Gen.RadioRFNB,
         defaultValue: false,
       },
       test2:{
@@ -101,7 +122,7 @@ const genericFormFields = new GenericFormFields('login', {
         label: 'test2',
         labelPosition: 'right',
         validator: Validators.noValidation,
-        component: RadioRFNB,
+        component: Gen.RadioRFNB,
         defaultValue: false,
       },
     }
@@ -115,7 +136,7 @@ const genericFormFields = new GenericFormFields('login', {
         label: 'check1',
         labelPosition: 'right',
         validator: Validators.noValidation,
-        component: CheckboxRFNB,
+        component: Gen.CheckboxRFNB,
         defaultValue: true,
       },
       check2:{
@@ -123,7 +144,7 @@ const genericFormFields = new GenericFormFields('login', {
         label: 'check2',
         labelPosition: 'right',
         validator: Validators.noValidation,
-        component: CheckboxRFNB,
+        component: Gen.CheckboxRFNB,
         defaultValue: false,
       }
     },

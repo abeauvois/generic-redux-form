@@ -3,7 +3,8 @@ import React, { Component, createElement } from 'react'
 import { Field } from 'redux-form'
 
 // UI VENDORS
-import { List, ListItem, Avatar, Switch, CheckBox, Row, Text, Radio } from 'native-base'
+import { List, ListItem, Avatar, Switch, CheckBox,
+  InputGroup, Input, Row, Text, Radio, Icon } from 'native-base'
 // import Avatar from 'material-ui/Avatar'
 // import {List, ListItem} from 'material-ui/List'
 // import {Slider, Toggle} from 'redux-form-material-ui'
@@ -32,26 +33,6 @@ const Multiply = (props) => {
       }
     </ListWrapper>
   )}
-
-// const MultiplyRF = (props) => {
-//   const {labels, onChange, defaultValue, values, ListWrapper, WrappedComponent} = props
-//   return (
-//     <ListWrapper>
-//       {
-//         labels.map(label => {
-//           return (
-//             <Field
-//               key={label}
-//               name={label}
-//               onComponentChange={onChange} // Available for createComponent() later..
-//               defaultValue={getDefaultValue(labels, label, defaultValue)} // value prop for WrappedComponent, not for Field
-//               value={values[label]}
-//             />
-//           )}
-//         )
-//       }
-//     </ListWrapper>
-//   )}
 
 function MakeMultiple(ListWrapper, WrappedComponent){
   return function createMultiple(config) {
@@ -148,40 +129,45 @@ function MakeMultiple(ListWrapper, WrappedComponent){
 //   return MakeMultiple(List, WappedComponent, config)
 // }
 
-  function createComponent(NativeBaseComponent, mapProps) {
-    class InputComponent extends Component {
-      getRenderedComponent() {
-        return this.refs.component
-      }
-      render() {
-        return createElement(NativeBaseComponent, {
-          ...mapProps(this.props),
-          ref: 'component'
-        })
-      }
+function createComponent(NativeBaseComponent, mapProps) {
+  class InputComponent extends Component {
+    getRenderedComponent() {
+      return this.refs.component
     }
-    InputComponent.displayName = `ReduxFormNativeBase${NativeBaseComponent.name}`
-    return InputComponent
+    render() {
+      return createElement(NativeBaseComponent, {
+        ...mapProps(this.props),
+        ref: 'component'
+      })
+    }
   }
+  InputComponent.displayName = `ReduxFormNativeBase${NativeBaseComponent.name}`
+  return InputComponent
+}
 
-  // WRAPPING Native-Base-Web component for better layout and event handling
-  const WrappedCheckbox = (props) =>
-    <ListItem onClick={props.onChange} >
-      <Text>{props.label}</Text>
-      <CheckBox checked={props.checked}/>
-    </ListItem>
-  const WrappedSwitch = (props) =>
-    <Row>
-      <Text>{props.label}</Text>
-      <Switch value={props.value} onValueChange={props.onChange}/>
-    </Row>
-  const WrappedRadio = (props) =>
-    <ListItem onClick={props.onChange} >
-      <Radio selected={props.selected}/>
-      <Text>{props.label}</Text>
-    </ListItem>
+// WRAPPING Native-Base-Web component for better layout and event handling
+const WrappedCheckbox = (props) =>
+  <ListItem onClick={props.onChange} >
+    <Text>{props.label}</Text>
+    <CheckBox checked={props.checked}/>
+  </ListItem>
+const WrappedSwitch = (props) =>
+  <Row>
+    <Text>{props.label}</Text>
+    <Switch value={props.value} onValueChange={props.onChange}/>
+  </Row>
+const WrappedRadio = (props) =>
+  <ListItem onClick={props.onChange} >
+    <Radio selected={props.selected}/>
+    <Text>{props.label}</Text>
+  </ListItem>
+const WrappedTextinput = (props) =>
+  <InputGroup>
+    <Icon name='ios-home' style={{color:'#384850'}}/>
+    <Input onChangeText={props.onChange}/>
+  </InputGroup>
 
-function toRFNB(Component){
+function mapNBtoRF(Component){ // map NativeBase props to ReduxForm
   return createComponent(
     Component,
     // (r) => {debugger},
@@ -203,6 +189,44 @@ function toRFNB(Component){
       checked: !!value ? true : false,
       value: !!value ? true : false,
       selected: !!value ? true : false,
+      onChange: (newValue) => { // Becomes props.onChange in Component
+        let result
+        if (inputType === 'textinput') {
+          result = newValue
+        }else { // checkbox, switch, section, radio
+          result = !value
+        }
+        // let valueVariable = (inputType === 'checked') ? 'checked' : (inputType === 'radio') ? 'selected' : 'value'
+        // const r = valueVariable === 'checked' ? result : e
+        // result[valueVariable]
+        onChange(result) // Calls Field RF onChange() => Field input
+      }
+    })
+  )
+}
+
+const CheckboxRFNB = mapNBtoRF(WrappedCheckbox)
+const SwitchRFNB = mapNBtoRF(WrappedSwitch)
+const RadioRFNB = mapNBtoRF(WrappedRadio)
+const TextinputRFNB = mapNBtoRF(WrappedTextinput)
+
+function toMultiple(Component){
+  return createComponent(
+    Component,
+    // (r) => {debugger},
+    ({
+      onComponentChange, // Coming from <WrappedComponent onComponentChange={}/>
+      inputType,
+      defaultValue,
+      name,
+      value,
+      ...props
+    }) => ({
+      ...props,
+      label: name,
+      checked: !!value ? true : false,
+      value: !!value ? true : false,
+      selected: !!value ? true : false,
       onChange: (e) => {
         let result
         // if (value === '') {
@@ -214,86 +238,7 @@ function toRFNB(Component){
         // const r = valueVariable === 'checked' ? result : e
         // result[valueVariable]
         onChange(result)
-      }
-    })
-  )
-}
-
-const CheckboxRFNB = toRFNB(WrappedCheckbox)
-const SwitchRFNB = toRFNB(WrappedSwitch)
-const RadioRFNB = toRFNB(WrappedRadio)
-  // const SwitchRFNB = createComponent( // TODO: rename it SwitchMultiple
-  //   WrappedSwitch,
-  //   ({
-  //     defaultValue,
-  //     input: {
-  //       onChange,
-  //       value,
-  //       name,
-  //       ...inputProps
-  //     },
-  //     meta,
-  //     ...props
-  //   }) => ({
-  //     ...inputProps,
-  //     ...props,
-  //     label: name,
-  //     value: !!value ? true : false,// || defaultValue,// || defaultValue, // !!converts into boolean
-  //     onChange: () => {
-  //       const result = {name, value: !!value || defaultValue}
-  //       onChange(result)
-  //
-  //       // onChange(newVal)
-  //       // console.log('onComponentChange result', componentState)
-  //       // const currentValue = componentState && componentState.values && componentState.values[name] || defaultValue
-  //       // if (currentValue !== result.value){
-  //       //   Object.keys(componentState.values).forEach(k => {
-  //       //     const newValue = componentState.values[k]
-  //           // onChange(result.value) // Only boolean for WrappedSwitch
-  //       //   })
-  //       // }
-  //     }
-  //   })
-  // )
-  // const RadioRFNB = createComponent(
-  //   WrappedRadio,
-  //   ({ // from Redux-Form component
-  //     input: {
-  //       onChange,
-  //       value,
-  //       ...inputProps
-  //     },
-  //     meta,
-  //     ...props
-  //   }) => ({ // to Native-Base-Web component
-  //     ...inputProps,
-  //     ...props,
-  //     value: !!value ? true : false,
-  //     // onClick ? OnChange ? onPress ?
-  //     onClick: (e) => onChange(!value)
-  //   })
-  // )
-
-  const SwitchMultiple = createComponent( // TODO: rename it SwitchMultiple
-    WrappedSwitch,
-    // (RF) => {debugger},
-    ({
-      onComponentChange, // Coming from <WrappedComponent onComponentChange={}/>
-      defaultValue,
-      name,
-      value,
-      // input: {
-      //   onChange,
-      //   value,
-      //   name,
-      //   ...inputProps
-      // },
-      // meta,
-      ...props
-    }) => ({
-      // ...inputProps,
-      ...props,
-      value: value,
+      },
       onValueChange: () => {
         const result = {name, value: !value}
         onComponentChange && onComponentChange(result)
@@ -311,6 +256,7 @@ const RadioRFNB = toRFNB(WrappedRadio)
       }
     })
   )
+}
 
 function MakeMultipleRFNB(ListWrapper, WrappedComponent) {
   return function createMultipleRFNB(config) {
@@ -338,8 +284,6 @@ function MakeMultipleRFNB(ListWrapper, WrappedComponent) {
     )
   }
 }
-
-// const MakeMultipleCheckBoxRFNB = MakeMultipleRFNB(MakeMultiple(List, CheckBoxRFNB, config))
 
 /**
  * TODO create separated Lib: redux-form-native-base
@@ -386,6 +330,6 @@ const GenericToggle = (props) => {
 
 export {
   GenericSlider, GenericToggle, MakeMultiple,
-  SwitchMultiple,
+  TextinputRFNB,
   SwitchRFNB, RadioRFNB, CheckboxRFNB, MakeMultipleRFNB
 }
