@@ -2,15 +2,12 @@
 import React, { Component, createElement } from 'react'
 import { View } from 'react-native'
 import { Field, change } from 'redux-form'
-import Dropzone from 'react-dropzone'
 
 // UI VENDORS
-import { List, ListItem, Avatar, Switch, CheckBox,
+import { OSTheme, List, ListItem, Avatar, Switch, CheckBox,
   InputGroup, Input, Row, Text, Radio, Icon, Thumbnail } from 'native-base'
-// import Avatar from 'material-ui/Avatar'
-// import {List, ListItem} from 'material-ui/List'
-// import {Slider, Toggle} from 'redux-form-material-ui'
-import { OSTheme } from 'native-base'
+
+import Dropzone from 'react-dropzone'
 
 const getDefaultValue = (labels, label, defaultValues) => {
   if (!labels) return defaultValues // Case of not Multiple
@@ -128,9 +125,6 @@ function MakeMultiple(ListWrapper, WrappedComponent){
     }
   }
 }
-// function MakeList(WappedComponent, config) {
-//   return MakeMultiple(List, WappedComponent, config)
-// }
 
 function createComponent(NativeBaseComponent, mapProps) {
   class InputComponent extends Component {

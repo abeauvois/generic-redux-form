@@ -1,10 +1,10 @@
 var path = require('path');
 var webpack = require('webpack');
-var CopyWebpackPlugin = require('copy-webpack-plugin');
+// var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   // context: path.join(__dirname, '..'),
-  devtool: 'source-map',
+  // devtool: 'source-map',
   entry: [
     'babel-polyfill',
     './src/index.js'
@@ -22,7 +22,7 @@ module.exports = {
       }
     }),
     new CopyWebpackPlugin([{
-      from: path.join(__dirname, 'src/lib'), to: path.join(__dirname, '../src'), //flatten: true
+      from: path.join(__dirname, 'src/lib'), to: path.join(__dirname, '../../src'), //flatten: true
     }], {debug: 'info'}
   ),
     // new webpack.optimize.UglifyJsPlugin({
@@ -38,7 +38,11 @@ module.exports = {
     ],
     extensions: [ '', '.json', '.js' ],
     alias:{
-      'generic-redux-form': 'lib'
+      'generic-redux-form': 'lib',
+      'react-native': 'react-native-web-extended',
+      'native-base': 'native-base-web',
+      'react-native-vector-icons/Ionicons': 'native-base-web/lib/Components/Widgets/Icon',
+      'react/lib/ReactNativePropRegistry': 'react-native-web-extended/dist/modules/ReactNativePropRegistry'
     }
   },
   module: {

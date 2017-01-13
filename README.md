@@ -1,5 +1,4 @@
 [![NPM version](https://badge.fury.io/js/generic-redux-form.svg)](https://badge.fury.io/js/generic-redux-form)
-[![LambCI Build Status](https://lambci-buildresults-11jwp0b3nz7l5.s3.amazonaws.com/gh/abeauvois/generic-redux-form/branches/master/5a466530172a1c4dc7b28f77b3e2b2be.svg)](https://lambci-buildresults-11jwp0b3nz7l5.s3.amazonaws.com/gh/abeauvois/generic-redux-form/branches/master/894687ca78df1a3be8f97812c723f645.html)
 
 `generic-redux-form` is under active development. APIs will change and things may still not work as expected. If you find
   any issue, please [report it](https://github.com/abeauvois/generic-redux-form/issues). We'll do our best to fix it.

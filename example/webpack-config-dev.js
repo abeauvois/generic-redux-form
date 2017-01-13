@@ -28,8 +28,6 @@ module.exports = {
       'generic-redux-form': 'lib',
       'react-native': 'react-native-web-extended',
       'native-base': 'native-base-web',
-      // 'alias': path.join(__dirname, 'deep/folder/alias'),
-      // './assets': 'app/assets',
       'react-native-vector-icons/Ionicons': 'native-base-web/lib/Components/Widgets/Icon',
       'react/lib/ReactNativePropRegistry': 'react-native-web-extended/dist/modules/ReactNativePropRegistry'
     }

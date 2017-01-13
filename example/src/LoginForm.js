@@ -1,14 +1,10 @@
-
+import injectTouchTapEvent from 'react-tap-event-plugin'
+injectTouchTapEvent() // Necessary for material-ui lib
 // UI VENDORS
 import React, { Component } from 'react'
 import { View } from 'react-native'
 import { CheckBox, List, ListItem, Card, CardItem, Row, Title,
   Text, Input, Radio, Slider, Switch, Button } from 'native-base'
-// import { Card, CardHeader, CardTitle, CardText } from 'material-ui/Card'
-// import { RadioButton } from 'material-ui/RadioButton'
-// import RaisedButton from 'material-ui/RaisedButton'
-// import {List, ListItem} from 'material-ui/List'
-// import { TextField, RadioButtonGroup, Checkbox, SelectField, Slider, Toggle } from 'redux-form-material-ui'
 import { SelectField } from 'redux-form-material-ui'
 import MenuItem from 'material-ui/MenuItem'
 
@@ -25,10 +21,6 @@ const CardHeader = (props) => {
 )}
 const CardTitle = Title
 const CardText = CardItem
-
-const RadioButtonGroup = View
-
-const TextField = Input // TODO: InputGroup
 
 const genericFormFields = new GenericFormFields('login', {
   // email:{
@@ -159,11 +151,11 @@ const genericFormFields = new GenericFormFields('login', {
       }
     },
   },
-  validCancel:{
-    type: 'FormButtons',
-    label: 'validCancel',
-    component: Gen.Button,
-  }
+  // validCancel:{
+  //   type: 'FormButtons',
+  //   label: 'validCancel',
+  //   component: Gen.Button,
+  // }
 
   // settings:{
   //   type: 'toggle',
@@ -199,35 +191,17 @@ const genericFormFields = new GenericFormFields('login', {
 class LoginForm extends Component {
   constructor (props) {
     super(props)
-    this.state = {
-      value: "key0",
-    }
-    this.handleChange = this.handleChange.bind(this)
   }
-  handleChange = (event, index, value) => this.setState({value})
   render() {
     return (
       <Card>
         <CardHeader title="Generic Redux Form" subtitle="Native Base Example"></CardHeader>
         <CardTitle>TITLE</CardTitle>
         <CardText>
-          {/* <RadioRFNB label="todo" checked={true} onChange={() => console.log('clicked')}/> */}
           <GenericForm {...this.props}/>
         </CardText>
       </Card>
     )
-    // return (
-    //     <Card>
-    //       <CardHeader
-    //         title="Generic Redux Form"
-    //         subtitle="Material UI Example">
-    //       </CardHeader>
-    //       <CardTitle>Login Form</CardTitle>
-    //       <CardText>
-    //         <GenericForm {...this.props}/>
-    //       </CardText>
-    //     </Card>
-    // )
   }
 }
 

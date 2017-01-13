@@ -1,6 +1,5 @@
 // @flow
-import injectTouchTapEvent from 'react-tap-event-plugin'
-injectTouchTapEvent() // Necessary for material-ui lib
+
 import React, { Component, PropTypes } from 'react'
 import { Field, Form, FormSection, reduxForm } from 'redux-form'
 
@@ -28,7 +27,6 @@ class GenericForm extends Component {
     //   .getRenderedComponent() // on ReduxFormMaterialUITextField, returns TextField
     //   .focus()                // on TextField
   }
-  // handleChange = (event, index, value) => this.setState({value})
   submit(){
     console.log('submitted')
   }
@@ -51,19 +49,6 @@ class GenericForm extends Component {
             limits, onChange, validator, touched, error, ref, withRef} = config
 
             switch (type) {
-              // case 'image':
-              //   return renderFormImage(k)
-              // case 'avatar':
-              //   return this.renderFormAvatar(k)
-              // case 'slider':
-              // case 'checkbox':
-              // case 'toggle':
-              // case 'radio':
-              //   return (
-              //     <Field key={k} name={label}
-              //       component={component(config)}
-              //     />
-              //   )
               case 'section':
                 const inputsLabels = Object.keys(inputs)
                 return (
@@ -84,6 +69,8 @@ class GenericForm extends Component {
                     }
                   </FormSection>
                 )
+                // case 'image':
+                // case 'slider':
                 // case 'dropdown':
                 //   return (
                 //     <Field
@@ -105,6 +92,7 @@ class GenericForm extends Component {
                 //     </View>
                 //   )
               default:
+                // ref={ref} withRef={withRef}/>
                 return (
                   <Field
                     key={k}
@@ -112,25 +100,14 @@ class GenericForm extends Component {
                     component={component}
                     defaultValue={defaultValue}
                     placeholder={placeholder}
-                    inputType={type}
-                    ref={ref} withRef={withRef}/>
+                    inputType={type}/>
                 )}
           })
         }
-
       </Form>
     )
   }
 }
-
-// function mapStateToProps(state, ownProps){
-//   let formValues = genericFormFields.getDefaultValues()
-//   return {
-//     fieldsNames: genericFormFields.getFieldsListKeys(),
-//     validate: genericFormFields.validate.bind(genericFormFields),
-//     initialValues: formValues || genericFormFields.getDefaultValues(),
-//   }
-// }
 
 const gReduxForm = genericFormFields => WrappedComponent => reduxForm({
     form: genericFormFields.getFormName(),
