@@ -1,12 +1,12 @@
 
 import React, { Component, createElement } from 'react'
 import { View } from 'react-native'
-import { Field } from 'redux-form'
+import { Field, change } from 'redux-form'
 import Dropzone from 'react-dropzone'
 
 // UI VENDORS
 import { List, ListItem, Avatar, Switch, CheckBox,
-  InputGroup, Input, Row, Text, Radio, Icon } from 'native-base'
+  InputGroup, Input, Row, Text, Radio, Icon, Thumbnail } from 'native-base'
 // import Avatar from 'material-ui/Avatar'
 // import {List, ListItem} from 'material-ui/List'
 // import {Slider, Toggle} from 'redux-form-material-ui'
@@ -193,7 +193,7 @@ const WrappedButton = (props) =>
   <Button onClick={props.onclick}>{props.label}</Button>
 const WrappedFileinput = (props) =>
   <Dropzone onDrop={props.onDrop}>
-    <Text>Try dropping files here, or click to select'em.</Text>
+    <Thumbnail circular size={200} source={{uri: props.file && props.file.preview || 'https://facebook.github.io/react/img/logo_og.png'}}/>
   </Dropzone>
 
 function mapRFtoNB(Component){ // map ReduxForm to NativeBase props
@@ -209,7 +209,9 @@ function mapRFtoNB(Component){ // map ReduxForm to NativeBase props
         name,
         ...inputProps
       },
-      meta,
+      meta: {
+        dispatch,
+      },
       ...props
     }) => ({
       ...inputProps,
@@ -218,6 +220,7 @@ function mapRFtoNB(Component){ // map ReduxForm to NativeBase props
       checked: !!value ? true : false,
       value: !!value ? true : false,
       selected: !!value ? true : false,
+      file: value,
       onChange: (newValue) => { // Becomes props.onChange in Component
         let result
         if (inputType === 'textinput') {
@@ -229,6 +232,11 @@ function mapRFtoNB(Component){ // map ReduxForm to NativeBase props
         // const r = valueVariable === 'checked' ? result : e
         // result[valueVariable]
         onChange(result) // Calls Field RF onChange() => Field input
+      },
+      onDrop: (files) => {
+        // dispatch(change('login', 'file', files[0]))
+        // console.log('files uploaded', files)
+        onChange(files[0])
       }
     })
   )
