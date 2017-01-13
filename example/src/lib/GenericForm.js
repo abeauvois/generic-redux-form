@@ -2,7 +2,6 @@
 import injectTouchTapEvent from 'react-tap-event-plugin'
 injectTouchTapEvent() // Necessary for material-ui lib
 import React, { Component, PropTypes } from 'react'
-import { View } from 'react-native'
 import { Field, Form, FormSection, reduxForm } from 'redux-form'
 
 class GenericForm extends Component {
@@ -98,13 +97,13 @@ class GenericForm extends Component {
                 //       ref={ref} withRef={withRef}
                 //     />
                 //   )
-              case 'FormButtons':
-                return (
-                  <View key="FormButtons">
-                    {/* <FormButtons primary type="submit" label="Submit" disabled={submitting} /> */}
-                    {/* <FormButtons secondary label="Cancel" disabled={pristine || submitting} onClick={this.reset}/> */}
-                  </View>
-                )
+                // case 'FormButtons':
+                //   return (
+                //     <View key="FormButtons">
+                //       {/* <FormButtons primary type="submit" label="Submit" disabled={submitting} /> */}
+                //       {/* <FormButtons secondary label="Cancel" disabled={pristine || submitting} onClick={this.reset}/> */}
+                //     </View>
+                //   )
               default:
                 return (
                   <Field

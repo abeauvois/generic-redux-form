@@ -56,12 +56,13 @@
     "webpack-hot-middleware": "^2.14.0"
   },
   "dependencies": {
+    "material-ui": "^0.16.6",
     "react": "^15.4.1",
     "react-dom": "^15.4.1",
     "react-redux": "^5.0.1",
+    "react-tap-event-plugin": "^2.0.1",
     "redux": "^3.6.0",
     "redux-form": "^6.4.3",
-    "redux-form-material-ui": "^4.1.2",
-    "material-ui": "^0.16.6"
+    "redux-form-material-ui": "^4.1.2"
   }
 }
