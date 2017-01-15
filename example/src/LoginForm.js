@@ -5,12 +5,12 @@ import React, { Component } from 'react'
 import { View } from 'react-native'
 import { CheckBox, List, ListItem, Card, CardItem, Row, Title,
   Text, Input, Radio, Slider, Switch, Button } from 'native-base'
-import { SelectField } from 'redux-form-material-ui'
-import MenuItem from 'material-ui/MenuItem'
+// import { SelectField } from 'redux-form-material-ui'
+// import MenuItem from 'material-ui/MenuItem'
 
 // GENERIC REDUX FORM
 import { GenericFormFields, GenericForm, gReduxForm, Validators } from 'generic-redux-form'
-import { default as Gen } from 'generic-redux-form/GenericComponentsNativeBase'
+import { default as Gen } from './GenericComponentsNativeBase'
 
 const CardHeader = (props) => {
   return (
@@ -156,7 +156,6 @@ const genericFormFields = new GenericFormFields('login', {
   //   label: 'validCancel',
   //   component: Gen.Button,
   // }
-
   // settings:{
   //   type: 'toggle',
   //   label: 'settings',

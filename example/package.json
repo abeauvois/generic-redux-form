@@ -2,8 +2,8 @@
   "private": true,
   "scripts": {
     "clean": "rimraf dist",
-    "build:webpack": "cross-env NODE_ENV=production webpack --config webpack-config-prod.js",
-    "build:dev": "cross-env NODE_ENV=dev webpack --config webpack-config-dev.js",
+    "build:prod": "cross-env NODE_ENV=production webpack --config webpack-config-prod.js",
+    "build:dev": "cross-env NODE_ENV=development webpack --config webpack-config-dev.js",
     "build": "npm run clean && npm run build:webpack",
     "start": "node devServer.js",
     "prepublish": "npm run build"
@@ -20,7 +20,8 @@
     "react-tap-event-plugin": "^2.0.1",
     "redux": "^3.6.0",
     "redux-form": "^6.4.3",
-    "redux-form-material-ui": "^4.1.2"
+    "redux-form-material-ui": "^4.1.2",
+    "webpack-node-externals": "^1.5.4"
   },
   "devDependencies": {
     "babel-core": "^6.21.0",
