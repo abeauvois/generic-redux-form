@@ -4,12 +4,12 @@
     "clean": "rimraf dist",
     "build:prod": "cross-env NODE_ENV=production webpack --config webpack-config-prod.js",
     "build:dev": "cross-env NODE_ENV=development webpack --config webpack-config-dev.js",
-    "build": "npm run clean && npm run build:webpack",
+    "build": "npm run clean && npm run build:dev",
     "start": "node devServer.js",
     "prepublish": "npm run build"
   },
   "dependencies": {
-    "generic-redux-form": "file:../",
+    "generic-redux-form": "^1.4.2",
     "material-ui": "^0.16.6",
     "native-base-web": "^0.0.4",
     "react": "^15.4.1",

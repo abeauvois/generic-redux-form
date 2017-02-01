@@ -978,6 +978,28 @@ code-point-at@^1.0.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/code-point-at/-/code-point-at-1.1.0.tgz#0d070b4d043a5bea33a2f1a40e2edb3d9a4ccf77"
 
+coffee-react-transform@^2.4.1:
+  version "2.4.1"
+  resolved "https://registry.yarnpkg.com/coffee-react-transform/-/coffee-react-transform-2.4.1.tgz#c68846dfed8fd61913745bcc2ce6eff4aa263268"
+
+coffee-react@^2.1.2:
+  version "2.4.1"
+  resolved "https://registry.yarnpkg.com/coffee-react/-/coffee-react-2.4.1.tgz#567020492a54435dbc7057f43a2e5893e7539156"
+  dependencies:
+    coffee-react-transform "^2.4.1"
+    coffee-script "1.8.0"
+    mkdirp "^0.5.0"
+
+coffee-script@1.8.0:
+  version "1.8.0"
+  resolved "https://registry.yarnpkg.com/coffee-script/-/coffee-script-1.8.0.tgz#9c9f1d2b4a52a000ded15b659791703648263c1d"
+  dependencies:
+    mkdirp "~0.3.5"
+
+coffee-script@^1.9.0:
+  version "1.12.3"
+  resolved "https://registry.yarnpkg.com/coffee-script/-/coffee-script-1.12.3.tgz#de5f4b1b934a4e9f915c57acd7ad323f68f715db"
+
 color-convert@^1.3.0:
   version "1.8.2"
   resolved "https://registry.yarnpkg.com/color-convert/-/color-convert-1.8.2.tgz#be868184d7c8631766d54e7078e2672d7c7e3339"
@@ -1451,20 +1473,16 @@ generate-object-property@^1.1.0:
   dependencies:
     is-property "^1.0.0"
 
-"generic-redux-form@file:../":
-  version "1.4.0"
+generic-redux-form@^1.4.2:
+  version "1.4.2"
+  resolved "https://registry.yarnpkg.com/generic-redux-form/-/generic-redux-form-1.4.2.tgz#e80a5381c3374a121717c8b5ae22581f2df922eb"
   dependencies:
-    material-ui "^0.16.6"
-    native-base-web "^0.0.4"
+    jest-utils "^0.0.1"
     react "^15.4.1"
-    react-dom "^15.4.1"
-    react-dropzone "^3.9.0"
-    react-native-web-extended "^0.0.7"
-    react-redux "^5.0.1"
-    react-tap-event-plugin "^2.0.1"
+    react-dom "^15.4.2"
+    react-redux "^5.0.2"
     redux "^3.6.0"
     redux-form "^6.4.3"
-    redux-form-material-ui "^4.1.2"
 
 getpass@^0.1.1:
   version "0.1.6"
@@ -1778,6 +1796,13 @@ isstream@~0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/isstream/-/isstream-0.1.2.tgz#47e63f7af55afa6f92e1500e690eb8b8529c099a"
 
+jest-utils@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/jest-utils/-/jest-utils-0.0.1.tgz#f5100a8bcee1f94f8eca1222f08fd14c56a2a032"
+  dependencies:
+    coffee-react "^2.1.2"
+    coffee-script "^1.9.0"
+
 jodid25519@^1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/jodid25519/-/jodid25519-1.0.2.tgz#06d4912255093419477d425633606e0e90782967"
@@ -2008,11 +2033,15 @@ minimist@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/minimist/-/minimist-1.2.0.tgz#a35008b20f41383eec1fb914f4cd5df79a264284"
 
-"mkdirp@>=0.5 0", mkdirp@^0.5.1, mkdirp@~0.5.0, mkdirp@~0.5.1:
+"mkdirp@>=0.5 0", mkdirp@^0.5.0, mkdirp@^0.5.1, mkdirp@~0.5.0, mkdirp@~0.5.1:
   version "0.5.1"
   resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-0.5.1.tgz#30057438eac6cf7f8c4767f38648d6697d75c903"
   dependencies:
     minimist "0.0.8"
+
+mkdirp@~0.3.5:
+  version "0.3.5"
+  resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-0.3.5.tgz#de3e5f8961c88c787ee1368df849ac4413eca8d7"
 
 ms@0.7.1:
   version "0.7.1"
