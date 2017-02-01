@@ -38,14 +38,13 @@ class GenericForm extends Component {
     const {genericFormFields, handleSubmit, pristine, submitting } = this.props
     const names = genericFormFields.fieldsListKeys
     const FormButtons = genericFormFields.fieldsList['FormButtons'] && genericFormFields.fieldsList['FormButtons'].component
-
     return (
       <Form onSubmit={handleSubmit(this.submit)}>
         {
           names.map(k => {
             const isMultiple = l => l && l.length && (l.length > 0) // OR component.name === 'createMultiple'
             const config = genericFormFields.fieldsList[k]
-            const {type, label, labels, inputs, labelPosition, component, description, placeholder, defaultValue,
+            const {type, label, labels, inputs, iconName, labelPosition, component, description, placeholder, defaultValue,
             limits, onChange, validator, touched, error, ref, withRef} = config
 
             switch (type) {
@@ -62,6 +61,7 @@ class GenericForm extends Component {
                             component={inputs[inputLabel].component}
                             inputType={inputs[inputLabel].component}
                             placeholder={inputs[inputLabel].placeholder}
+                            iconName={inputs[inputLabel].iconName}
                             defaultValue={inputs[inputLabel].defaultValue}
                           />
                         )}
@@ -100,6 +100,7 @@ class GenericForm extends Component {
                     component={component}
                     defaultValue={defaultValue}
                     placeholder={placeholder}
+                    iconName={iconName}
                     inputType={type}/>
                 )}
           })
@@ -109,12 +110,12 @@ class GenericForm extends Component {
   }
 }
 
-const gReduxForm = genericFormFields => WrappedComponent => reduxForm({
+const gReduxForm = (genericFormFields, mapStateToProps, mapDispatchToProps) => WrappedComponent => reduxForm({
     form: genericFormFields.getFormName(),
     genericFormFields: genericFormFields,
     enableReinitialize: true,
     initialValues: genericFormFields.getDefaultValues(),
-  })(WrappedComponent)
+  }, mapStateToProps, mapDispatchToProps)(WrappedComponent)
 
 export {
   GenericForm,

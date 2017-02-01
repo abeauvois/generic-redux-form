@@ -1022,6 +1022,28 @@ code-point-at@^1.0.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/code-point-at/-/code-point-at-1.1.0.tgz#0d070b4d043a5bea33a2f1a40e2edb3d9a4ccf77"
 
+coffee-react-transform@^2.4.1:
+  version "2.4.1"
+  resolved "https://registry.yarnpkg.com/coffee-react-transform/-/coffee-react-transform-2.4.1.tgz#c68846dfed8fd61913745bcc2ce6eff4aa263268"
+
+coffee-react@^2.1.2:
+  version "2.4.1"
+  resolved "https://registry.yarnpkg.com/coffee-react/-/coffee-react-2.4.1.tgz#567020492a54435dbc7057f43a2e5893e7539156"
+  dependencies:
+    coffee-react-transform "^2.4.1"
+    coffee-script "1.8.0"
+    mkdirp "^0.5.0"
+
+coffee-script@1.8.0:
+  version "1.8.0"
+  resolved "https://registry.yarnpkg.com/coffee-script/-/coffee-script-1.8.0.tgz#9c9f1d2b4a52a000ded15b659791703648263c1d"
+  dependencies:
+    mkdirp "~0.3.5"
+
+coffee-script@^1.9.0:
+  version "1.12.2"
+  resolved "https://registry.yarnpkg.com/coffee-script/-/coffee-script-1.12.2.tgz#0d4cbdee183f650da95419570c4929d08ef91376"
+
 colors@1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/colors/-/colors-1.0.3.tgz#0433f44d809680fdeb60ed260f1b0c262e82a40b"
@@ -1987,6 +2009,13 @@ jest-util@^18.1.0:
     jest-mock "^18.0.0"
     mkdirp "^0.5.1"
 
+jest-utils@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/jest-utils/-/jest-utils-0.0.1.tgz#f5100a8bcee1f94f8eca1222f08fd14c56a2a032"
+  dependencies:
+    coffee-react "^2.1.2"
+    coffee-script "^1.9.0"
+
 jest@^18.1.0:
   version "18.1.0"
   resolved "https://registry.yarnpkg.com/jest/-/jest-18.1.0.tgz#bcebf1e203dee5c2ad2091c805300a343d9e6c7d"
@@ -2309,11 +2338,15 @@ minimist@^1.1.1, minimist@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/minimist/-/minimist-1.2.0.tgz#a35008b20f41383eec1fb914f4cd5df79a264284"
 
-"mkdirp@>=0.5 0", mkdirp@^0.5.1, mkdirp@~0.5.0, mkdirp@~0.5.1:
+"mkdirp@>=0.5 0", mkdirp@^0.5.0, mkdirp@^0.5.1, mkdirp@~0.5.0, mkdirp@~0.5.1:
   version "0.5.1"
   resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-0.5.1.tgz#30057438eac6cf7f8c4767f38648d6697d75c903"
   dependencies:
     minimist "0.0.8"
+
+mkdirp@~0.3.5:
+  version "0.3.5"
+  resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-0.3.5.tgz#de3e5f8961c88c787ee1368df849ac4413eca8d7"
 
 ms@0.7.1:
   version "0.7.1"
