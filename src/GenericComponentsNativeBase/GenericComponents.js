@@ -6,9 +6,13 @@ import { Field, change } from 'redux-form'
 // UI VENDORS
 import { OSTheme, List, ListItem, Avatar, Switch, CheckBox,
   InputGroup, Input, Row, Text, Radio, Icon, Thumbnail } from 'native-base'
-
+// Picker not available in native-base-web yet
+// import Picker from 'react-picker'
 import Dropzone from 'react-dropzone'
-
+import Select from 'react-select'
+import 'react-select/dist/react-select.css'
+// import Picker from './Picker'
+// const PickerItem = Picker.Item
 const getDefaultValue = (labels, label, defaultValues) => {
   if (!labels) return defaultValues // Case of not Multiple
   return defaultValues.find((dv, i) => labels[i] === label )
@@ -151,11 +155,28 @@ const WrappedCheckbox = (props) =>
     <CheckBox checked={props.checked}/>
   </ListItem>
 const WrappedPicker = (props) =>
-  <Picker
-    selectedValue={value}
-    onValueChange={(itemValue) => onChange(itemValue)}
-    {...props}>
-  </Picker>
+  <View style={{
+    borderBottomWidth: 1,
+    marginLeft: 15,
+    padding: 10,
+    paddingLeft: 2,
+    justifyContent: 'space-between', //: 'flex-start',
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderColor: '#ddd'
+  }}>
+    <Text>{props.label}</Text>
+    <Select
+      style={{width: 120}}
+      value={props.value}
+      options={[
+        { value: 'one', label: 'One' },
+        { value: 'two', label: 'Two' }
+      ]}
+      onChange={props.onChange}
+    />
+  </View>
+
 const WrappedSwitch = (props) =>
   <View style={{
     borderBottomWidth: 1,
@@ -166,7 +187,6 @@ const WrappedSwitch = (props) =>
     flexDirection: 'row',
     alignItems: 'center',
     borderColor: '#ddd'
-
   }}>
     <Text>{props.label}</Text>
     <Switch value={props.value} onValueChange={props.onChange}/>
@@ -195,8 +215,8 @@ function mapRFtoNB(Component){ // map ReduxForm to NativeBase props
     Component,
     // (r) => {debugger},
     ({
-      inputType,
-      defaultValue,
+      inputType, // additional props passed to FIELD
+      defaultValue, // additional props passed to FIELD
       input: {
         onChange,
         value,
@@ -212,13 +232,16 @@ function mapRFtoNB(Component){ // map ReduxForm to NativeBase props
       ...props,
       label: name,
       checked: !!value ? true : false,
-      value: !!value ? true : false,
+      value: value,//!!value ? true : false,
       selected: !!value ? true : false,
       file: value,
       onChange: (newValue) => { // Becomes props.onChange in Component
         let result
         if (inputType === 'textinput') {
+          debugger
           result = newValue
+        } else if (inputType === 'dropdown'){ // inputType: checkbox, switch, radio
+          result = newValue.value
         } else { // inputType: checkbox, switch, radio
           result = !value
         }

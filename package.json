@@ -60,6 +60,7 @@
     "webpack-hot-middleware": "^2.14.0"
   },
   "dependencies": {
+    "generic-redux-form": "^1.4.2",
     "jest-utils": "^0.0.1",
     "react": "^15.4.1",
     "react-dom": "^15.4.2",

@@ -12,12 +12,6 @@ class GenericForm extends Component {
     if (!context._reduxForm) {
       throw new Error('GenericForm must be inside a component decorated with gReduxForm()')
     }
-
-    // this.state = {
-    //   value: 1,
-    // }
-    //
-    // this.handleChange = this.handleChange.bind(this)
     this.submit = this.submit.bind(this)
     this.reset = this.reset.bind(this)
   }
@@ -46,7 +40,9 @@ class GenericForm extends Component {
             const config = genericFormFields.fieldsList[k]
             const {type, label, labels, inputs, iconName, labelPosition, component, description, placeholder, defaultValue,
             limits, onChange, validator, touched, error, ref, withRef} = config
-
+            if (!component) {
+              throw new Error('GenericForm Fields must be provided with a component, here it s undefinded')
+            }
             switch (type) {
               case 'section':
                 const inputsLabels = Object.keys(inputs)
@@ -96,12 +92,13 @@ class GenericForm extends Component {
                 return (
                   <Field
                     key={k}
-                    name={label}
+                    name={k}
                     component={component}
-                    defaultValue={defaultValue}
+                    inputType={type}
                     placeholder={placeholder}
                     iconName={iconName}
-                    inputType={type}/>
+                    defaultValue={defaultValue}
+                  />
                 )}
           })
         }
