@@ -1,6 +1,6 @@
 
 import React, { Component, createElement } from 'react'
-import { View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import { Field, change } from 'redux-form'
 
 // UI VENDORS
@@ -13,6 +13,27 @@ import Select from 'react-select'
 import 'react-select/dist/react-select.css'
 // import Picker from './Picker'
 // const PickerItem = Picker.Item
+
+const styles = StyleSheet.create({
+  wrapped: {
+    borderBottomWidth: 1,
+    marginLeft: 15,
+    padding: 10,
+    paddingLeft: 2,
+    justifyContent: 'space-between', //: 'flex-start',
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderColor: '#ddd'
+  },
+  inputText: {
+    borderWidth: 1,
+    borderColor: '#ddd',
+    // minWidth: '200',
+    width: 450,
+
+  }
+})
+
 const getDefaultValue = (labels, label, defaultValues) => {
   if (!labels) return defaultValues // Case of not Multiple
   return defaultValues.find((dv, i) => labels[i] === label )
@@ -156,16 +177,7 @@ const WrappedCheckbox = (props) =>
   </ListItem>
 const WrappedPicker = (props) => {
   return (
-    <View style={{
-      borderBottomWidth: 1,
-      marginLeft: 15,
-      padding: 10,
-      paddingLeft: 2,
-      justifyContent: 'space-between', //: 'flex-start',
-      flexDirection: 'row',
-      alignItems: 'center',
-      borderColor: '#ddd'
-    }}>
+    <View style={styles.wrapped}>
       <Text>{props.label}</Text>
       <Select
         style={{width: 200}}
@@ -175,18 +187,8 @@ const WrappedPicker = (props) => {
       />
     </View>
   )}
-
 const WrappedSwitch = (props) =>
-  <View style={{
-    borderBottomWidth: 1,
-    marginLeft: 15,
-    padding: 10,
-    paddingLeft: 2,
-    justifyContent: 'space-between', //: 'flex-start',
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderColor: '#ddd'
-  }}>
+  <View style={styles.wrapped}>
     <Text>{props.label}</Text>
     <Switch value={props.value} onValueChange={props.onChange}/>
   </View>
@@ -195,13 +197,21 @@ const WrappedRadio = (props) =>
     <Radio selected={props.selected}/>
     <Text>{props.label}</Text>
   </ListItem>
+// const WrappedTextinput = (props) =>
+//   <InputGroup style={{marginLeft: 15, paddingLeft: 0}}>
+//     <Icon style={{padding: 0}}
+//       name={props.iconName || 'ios-home'}/>
+//     <Input
+//       onChangeText={props.onChange} placeholder={props.placeholder}/>
+//   </InputGroup>
 const WrappedTextinput = (props) =>
-  <InputGroup style={{marginLeft: 15, paddingLeft: 0}}>
-    <Icon style={{padding: 0}}
-      name={props.iconName || 'ios-home'}/>
+<View style={styles.wrapped}>
+  <Text>{props.label}</Text>
+  <View style={styles.inputText}>
     <Input
       onChangeText={props.onChange} placeholder={props.placeholder}/>
-  </InputGroup>
+  </View>
+</View>
 const WrappedButton = (props) =>
   <Button onClick={props.onclick}>{props.label}</Button>
 const WrappedFileinput = (props) =>
@@ -237,7 +247,6 @@ function mapRFtoNB(Component){ // map ReduxForm to NativeBase props
       onChange: (newValue) => { // Becomes props.onChange in Component
         let result
         if (inputType === 'textinput') {
-          debugger
           result = newValue
         } else if (inputType === 'dropdown'){ // inputType: checkbox, switch, radio
           result = newValue.value
