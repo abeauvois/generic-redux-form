@@ -154,28 +154,27 @@ const WrappedCheckbox = (props) =>
     <Text>{props.label}</Text>
     <CheckBox checked={props.checked}/>
   </ListItem>
-const WrappedPicker = (props) =>
-  <View style={{
-    borderBottomWidth: 1,
-    marginLeft: 15,
-    padding: 10,
-    paddingLeft: 2,
-    justifyContent: 'space-between', //: 'flex-start',
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderColor: '#ddd'
-  }}>
-    <Text>{props.label}</Text>
-    <Select
-      style={{width: 120}}
-      value={props.value}
-      options={[
-        { value: 'one', label: 'One' },
-        { value: 'two', label: 'Two' }
-      ]}
-      onChange={props.onChange}
-    />
-  </View>
+const WrappedPicker = (props) => {
+  return (
+    <View style={{
+      borderBottomWidth: 1,
+      marginLeft: 15,
+      padding: 10,
+      paddingLeft: 2,
+      justifyContent: 'space-between', //: 'flex-start',
+      flexDirection: 'row',
+      alignItems: 'center',
+      borderColor: '#ddd'
+    }}>
+      <Text>{props.label}</Text>
+      <Select
+        style={{width: 200}}
+        value={props.value}
+        options={props.labels.map(label => ({value: label, label: label}))}
+        onChange={props.onChange}
+      />
+    </View>
+  )}
 
 const WrappedSwitch = (props) =>
   <View style={{
@@ -232,7 +231,7 @@ function mapRFtoNB(Component){ // map ReduxForm to NativeBase props
       ...props,
       label: name,
       checked: !!value ? true : false,
-      value: value,//!!value ? true : false,
+      value: inputType === 'dropdown' ? value : !!value ? true : false,
       selected: !!value ? true : false,
       file: value,
       onChange: (newValue) => { // Becomes props.onChange in Component

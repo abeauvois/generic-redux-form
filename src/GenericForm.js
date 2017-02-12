@@ -40,6 +40,7 @@ class GenericForm extends Component {
             const config = genericFormFields.fieldsList[k]
             const {type, label, labels, inputs, iconName, labelPosition, component, description, placeholder, defaultValue,
             limits, onChange, validator, touched, error, ref, withRef} = config
+
             if (!component) {
               throw new Error('GenericForm Fields must be provided with a component, here it s undefinded')
             }
@@ -95,6 +96,7 @@ class GenericForm extends Component {
                     name={k}
                     component={component}
                     inputType={type}
+                    labels={labels}
                     placeholder={placeholder}
                     iconName={iconName}
                     defaultValue={defaultValue}
