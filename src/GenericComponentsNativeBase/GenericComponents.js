@@ -259,7 +259,7 @@ function mapRFtoNB(Component){ // map ReduxForm to NativeBase props
       min: limits && limits.min,
       max: limits && limits.max,
       checked: !!value ? true : false,
-      value: isNewValueDependant(inputType) ? value : !!value ? true : false,
+      value: isNewValueDependant(inputType) || (inputType === 'dropdown') ? value : !!value ? true : false,
       selected: !!value ? true : false,
       file: value,
       onChange: (newValue) => { // Becomes props.onChange in Component
