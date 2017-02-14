@@ -11,6 +11,8 @@ import { OSTheme, List, ListItem, Avatar, Switch, CheckBox,
 import Dropzone from 'react-dropzone'
 import Select from 'react-select'
 import 'react-select/dist/react-select.css'
+import Slider from 'react-rangeslider'
+import 'react-rangeslider/lib/index.css'
 // import Picker from './Picker'
 // const PickerItem = Picker.Item
 
@@ -212,6 +214,18 @@ const WrappedTextinput = (props) =>
       onChangeText={props.onChange} placeholder={props.placeholder}/>
   </View>
 </View>
+const WrappedSlider = (props) =>
+<View style={styles.wrapped}>
+  <Text>{props.label}</Text>
+  <View style={styles.inputText}>
+    <Slider style={{marginTop: 0}}
+      min={props.min}
+      max={props.max}
+      value={props.value}
+      onChange={props.onChange}
+    />
+  </View>
+</View>
 const WrappedButton = (props) =>
   <Button onClick={props.onclick}>{props.label}</Button>
 const WrappedFileinput = (props) =>
@@ -220,12 +234,14 @@ const WrappedFileinput = (props) =>
   </Dropzone>
 
 function mapRFtoNB(Component){ // map ReduxForm to NativeBase props
+  const isNewValueDependant = inputType => (inputType === 'textinput') || (inputType === 'slider')
   return createComponent(
     Component,
     // (r) => {debugger},
     ({
       inputType, // additional props passed to FIELD
       defaultValue, // additional props passed to FIELD
+      limits,
       input: {
         onChange,
         value,
@@ -240,13 +256,15 @@ function mapRFtoNB(Component){ // map ReduxForm to NativeBase props
       ...inputProps,
       ...props,
       label: name,
+      min: limits && limits.min,
+      max: limits && limits.max,
       checked: !!value ? true : false,
-      value: inputType === 'dropdown' ? value : !!value ? true : false,
+      value: isNewValueDependant(inputType) ? value : !!value ? true : false,
       selected: !!value ? true : false,
       file: value,
       onChange: (newValue) => { // Becomes props.onChange in Component
         let result
-        if (inputType === 'textinput') {
+        if ((inputType === 'textinput') || (inputType === 'slider')) {
           result = newValue
         } else if (inputType === 'dropdown'){ // inputType: checkbox, switch, radio
           result = newValue.value
@@ -272,6 +290,7 @@ const PickerRFNB = mapRFtoNB(WrappedPicker)
 const SwitchRFNB = mapRFtoNB(WrappedSwitch)
 const RadioRFNB = mapRFtoNB(WrappedRadio)
 const TextinputRFNB = mapRFtoNB(WrappedTextinput)
+const SliderRFNB = mapRFtoNB(WrappedSlider)
 const ButtonRFNB = mapRFtoNB(WrappedButton)
 const FileinputRFNB = mapRFtoNB(WrappedFileinput)
 
@@ -399,6 +418,6 @@ const GenericToggle = (props) => {
 
 export {
   GenericSlider, GenericToggle, MakeMultiple,
-  TextinputRFNB, ButtonRFNB, PickerRFNB, FileinputRFNB,
+  TextinputRFNB, ButtonRFNB, PickerRFNB, SliderRFNB, FileinputRFNB,
   SwitchRFNB, RadioRFNB, CheckboxRFNB, MakeMultipleRFNB
 }

@@ -41,7 +41,7 @@ class GenericForm extends Component {
             const {type, label, labels, inputs, iconName, labelPosition, component, description, placeholder, defaultValue,
             limits, onChange, validator, touched, error, ref, withRef} = config
 
-            if (!component) {
+            if ((type !== 'section') && !component) {
               throw new Error('GenericForm Fields must be provided with a component, here it s undefinded')
             }
             switch (type) {
@@ -56,10 +56,11 @@ class GenericForm extends Component {
                             key={inputLabel}
                             name={inputLabel}
                             component={inputs[inputLabel].component}
-                            inputType={inputs[inputLabel].component}
+                            inputType={inputs[inputLabel].type}
                             placeholder={inputs[inputLabel].placeholder}
                             iconName={inputs[inputLabel].iconName}
                             defaultValue={inputs[inputLabel].defaultValue}
+                            limits={inputs[inputLabel].limits}
                           />
                         )}
                       )
@@ -100,6 +101,7 @@ class GenericForm extends Component {
                     placeholder={placeholder}
                     iconName={iconName}
                     defaultValue={defaultValue}
+                    limits={limits}
                   />
                 )}
           })
