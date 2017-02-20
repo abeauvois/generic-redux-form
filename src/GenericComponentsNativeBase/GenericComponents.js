@@ -32,7 +32,9 @@ const styles = StyleSheet.create({
     borderColor: '#ddd',
     // minWidth: '200',
     width: 450,
-
+  },
+  slider: {
+    width: 450,
   }
 })
 
@@ -207,25 +209,25 @@ const WrappedRadio = (props) =>
 //       onChangeText={props.onChange} placeholder={props.placeholder}/>
 //   </InputGroup>
 const WrappedTextinput = (props) =>
-<View style={styles.wrapped}>
-  <Text>{props.label}</Text>
-  <View style={styles.inputText}>
-    <Input
-      onChangeText={props.onChange} placeholder={props.placeholder}/>
+  <View style={styles.wrapped}>
+    <Text>{props.label}</Text>
+    <View style={styles.inputText}>
+      <Input
+        onChangeText={props.onChange} placeholder={props.placeholder}/>
+    </View>
   </View>
-</View>
 const WrappedSlider = (props) =>
-<View style={styles.wrapped}>
-  <Text>{props.label}</Text>
-  <View style={styles.inputText}>
-    <Slider style={{marginTop: 0}}
-      min={props.min}
-      max={props.max}
-      value={props.value}
-      onChange={props.onChange}
-    />
+  <View style={styles.wrapped}>
+    <Text>{props.label}</Text>
+    <View style={styles.slider}>
+      <Slider style={{marginTop: 0}}
+        min={props.min}
+        max={props.max}
+        value={props.value}
+        onChange={props.onChange}
+      />
+    </View>
   </View>
-</View>
 const WrappedButton = (props) =>
   <Button onClick={props.onclick}>{props.label}</Button>
 const WrappedFileinput = (props) =>
