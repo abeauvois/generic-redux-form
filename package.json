@@ -1,6 +1,6 @@
 {
   "name": "generic-redux-form",
-  "version": "1.4.2",
+  "version": "1.4.3",
   "description": "Create multi-platform redux forms in a few lines of code, using native-base (web+mobile) or material-ui (web)",
   "main": "index.js",
   "scripts": {
